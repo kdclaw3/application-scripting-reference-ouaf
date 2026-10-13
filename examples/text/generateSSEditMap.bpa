@@ -1,0 +1,1 @@
+generateSSEditMap 'ExampleMap' using "example" target bpa;

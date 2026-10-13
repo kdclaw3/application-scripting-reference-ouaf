@@ -1,0 +1,25 @@
+# Preparation only. The branch filter intentionally matches no valid Git branch.
+version: 3
+executors:
+  language:
+    docker:
+      - image: cimg/node:26.9.0
+    resource_class: medium
+jobs:
+  prepare:
+    executor: language
+    steps:
+      - checkout
+      - run:
+          name: Install pinned dependencies
+          command: npm ci --include=dev
+      - run:
+          name: Generate language specification
+          command: npm run build
+codeintel:
+  prepare: [prepare]
+  contexts: []
+  filters:
+    branches:
+      only: ["/^$/"]
+  timeout_minutes: 30

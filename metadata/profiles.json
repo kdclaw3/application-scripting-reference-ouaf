@@ -1,0 +1,56 @@
+[
+  {
+    "id": "bpa-1",
+    "name": "BPA engine 1.0",
+    "engineCode": "F110",
+    "scriptTypes": ["bpa"],
+    "execution": "browser",
+    "expressionLanguage": "Browser XPath 1.0",
+    "description": "Interactive BPA execution using structured browser steps. Edit Data text is converted into those steps, so command behavior can differ from server execution."
+  },
+  {
+    "id": "bpa-legacy",
+    "name": "BPA Framework 2.1 compatibility",
+    "engineCode": "F11C",
+    "scriptTypes": ["bpa"],
+    "execution": "browser",
+    "expressionLanguage": "Browser XPath 1.0 with legacy compatibility behavior",
+    "description": "Legacy BPA compatibility mode. The 2.1 label identifies Framework compatibility; it is not a numbered script engine between 2.0 and 3.0."
+  },
+  {
+    "id": "server-1",
+    "name": "Server engine 1.0",
+    "engineCode": "F110",
+    "scriptTypes": ["service", "plug-in"],
+    "execution": "server",
+    "expressionLanguage": "XPath 1.0",
+    "description": "Server execution of Edit Data actions using XPath 1.0. It shares an engine code with BPA 1.0 but executes a different action model."
+  },
+  {
+    "id": "server-2",
+    "name": "Server engine 2.0",
+    "engineCode": "F120",
+    "scriptTypes": ["service", "plug-in"],
+    "execution": "server",
+    "expressionLanguage": "XPath 2.0",
+    "description": "Server execution of Edit Data actions using XPath 2.0 expression evaluation. Supported scripts may include Groovy members alongside Edit Data steps."
+  },
+  {
+    "id": "server-3",
+    "name": "Server engine 3.0",
+    "engineCode": "F130",
+    "scriptTypes": ["service", "plug-in"],
+    "execution": "server",
+    "expressionLanguage": "XPath 2.0 with optimized evaluation",
+    "description": "Server execution using XPath 2.0 with evaluation and node-handling optimizations. This engine does not introduce XPath 3.0 or a third version of the language syntax."
+  },
+  {
+    "id": "groovy",
+    "name": "Groovy engine",
+    "engineCode": "F1GV",
+    "scriptTypes": ["plug-in", "groovy-library"],
+    "execution": "server",
+    "expressionLanguage": "Groovy",
+    "description": "Reference grouping for Groovy-engine plug-ins and Groovy library integration. Library engine validation can also accept numbered engine settings; grouping and source-step selection do not establish successful save, compilation, or execution. This profile describes Groovy source and host interfaces rather than Edit Data commands, and is separate from invoking Groovy members inside a numbered-engine service or plug-in script."
+  }
+]

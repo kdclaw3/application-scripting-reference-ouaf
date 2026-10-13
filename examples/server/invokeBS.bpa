@@ -1,0 +1,4 @@
+// ExampleLookup is a synthetic service supplied by the host.
+declareBS 'ExampleLookup' as 'lookup';
+move 'sample' to "lookup/query";
+invokeBS 'ExampleLookup' using "lookup";

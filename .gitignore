@@ -1,0 +1,11 @@
+node_modules/
+generated/
+dist/
+site/
+coverage/
+.env*
+*.zip
+*.jar
+*.class
+*.log
+.DS_Store

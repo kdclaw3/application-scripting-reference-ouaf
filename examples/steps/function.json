@@ -1,0 +1,19 @@
+{
+  "profile": "bpa-1",
+  "steps": [
+    {
+      "sequence": 10,
+      "kind": "function",
+      "fields": {
+        "target": "example",
+        "successTarget": 20,
+        "errorTarget": 20
+      }
+    },
+    {
+      "sequence": 20,
+      "kind": "terminate",
+      "fields": {}
+    }
+  ]
+}

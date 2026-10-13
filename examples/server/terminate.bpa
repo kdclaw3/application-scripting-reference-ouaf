@@ -1,0 +1,5 @@
+// Illustrative host message 1000/1 must exist before this form is used.
+if ("request/id = ''")
+  terminate with error (1000, 1 %1='An identifier is required');
+end-if;
+terminate;

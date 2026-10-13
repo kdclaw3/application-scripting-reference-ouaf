@@ -1,0 +1,494 @@
+[
+  {
+    "id": "bpa.step.display-text",
+    "name": "display-text",
+    "purpose": "Displays instructional text.",
+    "representation": "authorable",
+    "required": {
+      "text": "string"
+    },
+    "optional": {},
+    "example": "examples/steps/display-text.json",
+    "behavior": "Displays instructional text in the script interface. Presentation and continuation are controlled by the host.",
+    "profiles": ["bpa-1"]
+  },
+  {
+    "id": "bpa.step.navigate",
+    "name": "navigate",
+    "purpose": "Requests a navigation destination.",
+    "representation": "authorable",
+    "required": {
+      "target": "string"
+    },
+    "optional": {},
+    "example": "examples/steps/navigate.json",
+    "behavior": "Requests the named navigation destination. The host resolves the destination and controls the resulting interaction.",
+    "profiles": ["bpa-1"]
+  },
+  {
+    "id": "bpa.step.navigate-refresh",
+    "name": "navigate-refresh",
+    "purpose": "Navigates and refreshes the dashboard.",
+    "representation": "expansion-only",
+    "required": {
+      "target": "string"
+    },
+    "optional": {},
+    "example": "examples/steps/navigate-refresh.json",
+    "behavior": "Requests the named navigation destination with a dashboard refresh.",
+    "profiles": ["bpa-1"]
+  },
+  {
+    "id": "bpa.step.goto",
+    "name": "goto",
+    "purpose": "Jumps to another step sequence.",
+    "representation": "authorable",
+    "required": {
+      "target": "integer"
+    },
+    "optional": {},
+    "example": "examples/steps/goto.json",
+    "behavior": "Continues at the specified structured sequence without retaining a return position.",
+    "profiles": ["bpa-1"]
+  },
+  {
+    "id": "bpa.step.press-button",
+    "name": "press-button",
+    "purpose": "Requests a button action.",
+    "representation": "authorable",
+    "required": {
+      "button": "string"
+    },
+    "optional": {},
+    "example": "examples/steps/press-button.json",
+    "behavior": "Requests the identified host button action. Availability and effects depend on the current interface.",
+    "profiles": ["bpa-1"]
+  },
+  {
+    "id": "bpa.step.input",
+    "name": "input",
+    "purpose": "Collects a value into a destination.",
+    "representation": "authorable",
+    "required": {
+      "destination": "string"
+    },
+    "optional": {
+      "text": "string",
+      "choices": "choices"
+    },
+    "example": "examples/steps/input.json",
+    "behavior": "Collects input for the destination. Optional text supplies instructions. Continue advances to the next sequence; a selected configured choice instead supplies its sequence target.",
+    "profiles": ["bpa-1"]
+  },
+  {
+    "id": "bpa.step.prompt",
+    "name": "prompt",
+    "purpose": "Offers choices with step destinations.",
+    "representation": "authorable",
+    "required": {
+      "choices": "choices"
+    },
+    "optional": {},
+    "example": "examples/steps/prompt.json",
+    "behavior": "Presents the available choices and continues at the selected choice target. At most one choice is the default.",
+    "profiles": ["bpa-1"]
+  },
+  {
+    "id": "bpa.step.move",
+    "name": "move",
+    "purpose": "Copies a value into a destination.",
+    "representation": "authorable",
+    "required": {
+      "source": "string",
+      "destination": "string"
+    },
+    "optional": {},
+    "example": "examples/steps/move.json",
+    "behavior": "Copies or clears the selected destination. XML node values can remain node references when assigned to temporary variables.",
+    "profiles": ["bpa-1"]
+  },
+  {
+    "id": "bpa.step.conditional",
+    "name": "conditional",
+    "purpose": "Selects a true or false step destination.",
+    "representation": "authorable",
+    "required": {
+      "condition": "string",
+      "trueTarget": "integer",
+      "falseTarget": "integer"
+    },
+    "optional": {},
+    "example": "examples/steps/conditional.json",
+    "behavior": "Continues at trueTarget when the condition result equals true, or falseTarget otherwise. This structured form is distinct from textual branch, whose condition is lost during conversion.",
+    "profiles": ["bpa-1"]
+  },
+  {
+    "id": "bpa.step.focus",
+    "name": "focus",
+    "purpose": "Places focus on a field.",
+    "representation": "authorable",
+    "required": {
+      "field": "string",
+      "text": "string"
+    },
+    "optional": {
+      "choices": "choices"
+    },
+    "example": "examples/steps/focus.json",
+    "behavior": "Places focus on the identified field and displays the supplied text. Continue advances to the next sequence; a selected configured choice instead supplies its sequence target.",
+    "profiles": ["bpa-1"]
+  },
+  {
+    "id": "bpa.step.math",
+    "name": "math",
+    "purpose": "Applies arithmetic to a destination.",
+    "representation": "authorable",
+    "required": {
+      "source": "string",
+      "destination": "string",
+      "operator": "operator"
+    },
+    "optional": {},
+    "example": "examples/steps/math.json",
+    "behavior": "Applies the specified arithmetic operation to the destination using the source value.",
+    "profiles": ["bpa-1"]
+  },
+  {
+    "id": "bpa.step.label",
+    "name": "label",
+    "purpose": "Marks a step with descriptive text.",
+    "representation": "authorable",
+    "required": {
+      "text": "string"
+    },
+    "optional": {},
+    "example": "examples/steps/label.json",
+    "behavior": "Provides a structured sequence with descriptive text. Unlike a standalone textual label statement, this record occupies a position in the script.",
+    "profiles": ["bpa-1"]
+  },
+  {
+    "id": "bpa.step.height",
+    "name": "height",
+    "purpose": "Sets the script display height.",
+    "representation": "authorable",
+    "required": {
+      "height": "positive",
+      "unit": "unit"
+    },
+    "optional": {},
+    "example": "examples/steps/height.json",
+    "behavior": "Requests the script display height using the specified value and unit.",
+    "profiles": ["bpa-1"]
+  },
+  {
+    "id": "bpa.step.function",
+    "name": "function",
+    "purpose": "Invokes a host function.",
+    "representation": "authorable",
+    "required": {
+      "target": "string",
+      "successTarget": "integer",
+      "errorTarget": "integer"
+    },
+    "optional": {},
+    "example": "examples/steps/function.json",
+    "behavior": "Invokes the named host function and continues at successTarget or errorTarget according to its outcome.",
+    "profiles": ["bpa-1"]
+  },
+  {
+    "id": "bpa.step.transfer-control",
+    "name": "transfer-control",
+    "purpose": "Transfers to a different script.",
+    "representation": "authorable",
+    "required": {
+      "target": "string"
+    },
+    "optional": {},
+    "example": "examples/steps/transfer-control.json",
+    "behavior": "Starts a replacement script, clears the call stack and data areas, and retains temporary variables. The caller does not resume.",
+    "profiles": ["bpa-1"]
+  },
+  {
+    "id": "bpa.step.perform-script",
+    "name": "perform-script",
+    "purpose": "Calls a script and retains a return position.",
+    "representation": "authorable",
+    "required": {
+      "target": "string"
+    },
+    "optional": {},
+    "example": "examples/steps/perform-script.json",
+    "behavior": "Calls the named script with shared temporary variables and data areas. Normal completion returns to the caller; termination or transfer in the callee can prevent return.",
+    "profiles": ["bpa-1"]
+  },
+  {
+    "id": "bpa.step.invoke-service-script",
+    "name": "invoke-service-script",
+    "purpose": "Invokes a service script with a data area.",
+    "representation": "authorable",
+    "required": {
+      "target": "string",
+      "dataArea": "string",
+      "successTarget": "integer",
+      "errorTarget": "integer"
+    },
+    "optional": {},
+    "example": "examples/steps/invoke-service-script.json",
+    "behavior": "Invokes the named service script with the supplied data area, then follows successTarget or errorTarget.",
+    "profiles": ["bpa-1"]
+  },
+  {
+    "id": "bpa.step.invoke-business-object",
+    "name": "invoke-business-object",
+    "purpose": "Invokes a business object operation.",
+    "representation": "authorable",
+    "required": {
+      "target": "string",
+      "dataArea": "string",
+      "action": "action",
+      "successTarget": "integer",
+      "errorTarget": "integer"
+    },
+    "optional": {},
+    "example": "examples/steps/invoke-business-object.json",
+    "behavior": "Requests the specified operation on the named business object using the supplied data area, then follows successTarget or errorTarget.",
+    "profiles": ["bpa-1"]
+  },
+  {
+    "id": "bpa.step.invoke-business-service",
+    "name": "invoke-business-service",
+    "purpose": "Invokes a business service.",
+    "representation": "authorable",
+    "required": {
+      "target": "string",
+      "dataArea": "string",
+      "successTarget": "integer",
+      "errorTarget": "integer"
+    },
+    "optional": {},
+    "example": "examples/steps/invoke-business-service.json",
+    "behavior": "Invokes the named business service with the supplied data area, then follows successTarget or errorTarget.",
+    "profiles": ["bpa-1"]
+  },
+  {
+    "id": "bpa.step.invoke-map",
+    "name": "invoke-map",
+    "purpose": "Presents a map.",
+    "representation": "authorable",
+    "required": {
+      "target": "string"
+    },
+    "optional": {
+      "dataArea": "string",
+      "display": "display",
+      "choices": "choices"
+    },
+    "example": "examples/steps/invoke-map.json",
+    "behavior": "Presents the named map, using a popup by default. A returned choice selects its configured sequence target; a return that matches no choice advances to the next sequence. Closing the map is a separate path and can stop execution when no default continuation is configured. The host controls interaction and resulting data.",
+    "profiles": ["bpa-1"]
+  },
+  {
+    "id": "bpa.step.for",
+    "name": "for",
+    "purpose": "Represents an expanded loop instruction.",
+    "representation": "expansion-only",
+    "required": {
+      "variable": "string",
+      "expression": "string",
+      "exitTarget": "integer"
+    },
+    "optional": {},
+    "example": "examples/steps/for.json",
+    "behavior": "Visits the selected nodes, starting the body at the following instruction and continuing to exitTarget when complete. The loop variable is cleared after an iterated loop finishes; that rule does not establish cleanup for an empty selection.",
+    "profiles": ["bpa-1"]
+  },
+  {
+    "id": "bpa.step.terminate",
+    "name": "terminate",
+    "purpose": "Stops execution.",
+    "representation": "authorable",
+    "required": {},
+    "optional": {
+      "errorScript": "string"
+    },
+    "example": "examples/steps/terminate.json",
+    "behavior": "Stops the whole BPA, including active callers. Optional errorScript describes a host error action outside this profile; it does not give textual terminate an error payload.",
+    "profiles": ["bpa-1"]
+  },
+  {
+    "id": "bpa.step.generate-object-map",
+    "name": "generate-object-map",
+    "purpose": "Generates a business-object edit map.",
+    "representation": "expansion-only",
+    "required": {
+      "target": "string"
+    },
+    "optional": {
+      "dataArea": "string",
+      "display": "display"
+    },
+    "example": "examples/steps/generate-object-map.json",
+    "behavior": "Requests a generated edit map for the named business object. The default display target is the page.",
+    "profiles": ["bpa-1"]
+  },
+  {
+    "id": "bpa.step.generate-service-map",
+    "name": "generate-service-map",
+    "purpose": "Generates a business-service edit map.",
+    "representation": "expansion-only",
+    "required": {
+      "target": "string"
+    },
+    "optional": {
+      "dataArea": "string",
+      "display": "display"
+    },
+    "example": "examples/steps/generate-service-map.json",
+    "behavior": "Requests a generated edit map for the named business service. The default display target is the page.",
+    "profiles": ["bpa-1"]
+  },
+  {
+    "id": "bpa.step.generate-data-map",
+    "name": "generate-data-map",
+    "purpose": "Generates a data-area edit map.",
+    "representation": "expansion-only",
+    "required": {
+      "target": "string"
+    },
+    "optional": {
+      "dataArea": "string",
+      "display": "display"
+    },
+    "example": "examples/steps/generate-data-map.json",
+    "behavior": "Requests a generated edit map for the named data area. The default display target is the page.",
+    "profiles": ["bpa-1"]
+  },
+  {
+    "id": "bpa.step.generate-script-map",
+    "name": "generate-script-map",
+    "purpose": "Generates a service-script edit map.",
+    "representation": "expansion-only",
+    "required": {
+      "target": "string"
+    },
+    "optional": {
+      "dataArea": "string",
+      "display": "display"
+    },
+    "example": "examples/steps/generate-script-map.json",
+    "behavior": "Requests a generated edit map for the named service script. The default display target is the page.",
+    "profiles": ["bpa-1"]
+  },
+  {
+    "id": "bpa.step.declare-object",
+    "name": "declare-object",
+    "purpose": "Declares a business-object data area.",
+    "representation": "expansion-only",
+    "required": {
+      "target": "string",
+      "alias": "string"
+    },
+    "optional": {},
+    "example": "examples/steps/declare-object.json",
+    "behavior": "Creates a data-area alias using the named business-object schema. Redeclaration replaces the alias's current data; the host supplies schema details and defaults.",
+    "profiles": ["bpa-1"]
+  },
+  {
+    "id": "bpa.step.declare-grouped-object",
+    "name": "declare-grouped-object",
+    "purpose": "Declares a grouped business-object data area.",
+    "representation": "expansion-only",
+    "required": {
+      "target": "string",
+      "alias": "string"
+    },
+    "optional": {},
+    "example": "examples/steps/declare-grouped-object.json",
+    "behavior": "Creates a data-area alias using a grouped business-object schema. Redeclaration replaces the alias's current data; the host supplies schema details and defaults.",
+    "profiles": ["bpa-1"]
+  },
+  {
+    "id": "bpa.step.declare-service",
+    "name": "declare-service",
+    "purpose": "Declares a business-service data area.",
+    "representation": "expansion-only",
+    "required": {
+      "target": "string",
+      "alias": "string"
+    },
+    "optional": {},
+    "example": "examples/steps/declare-service.json",
+    "behavior": "Creates a data-area alias using the named business-service schema. Redeclaration replaces the alias's current data; the host supplies schema details and defaults.",
+    "profiles": ["bpa-1"]
+  },
+  {
+    "id": "bpa.step.declare-data",
+    "name": "declare-data",
+    "purpose": "Declares a data area.",
+    "representation": "expansion-only",
+    "required": {
+      "target": "string",
+      "alias": "string"
+    },
+    "optional": {},
+    "example": "examples/steps/declare-data.json",
+    "behavior": "Creates an alias using the named data-area schema. Redeclaration replaces the alias's current data; the host supplies schema details and defaults.",
+    "profiles": ["bpa-1"]
+  },
+  {
+    "id": "bpa.step.declare-script",
+    "name": "declare-script",
+    "purpose": "Declares a service-script data area.",
+    "representation": "expansion-only",
+    "required": {
+      "target": "string",
+      "alias": "string"
+    },
+    "optional": {},
+    "example": "examples/steps/declare-script.json",
+    "behavior": "Creates a data-area alias using the named service-script schema. Redeclaration replaces the alias's current data; the host supplies schema details and defaults.",
+    "profiles": ["bpa-1"]
+  },
+  {
+    "id": "bpa.step.declare-map",
+    "name": "declare-map",
+    "purpose": "Declares a map data area.",
+    "representation": "expansion-only",
+    "required": {
+      "target": "string",
+      "alias": "string"
+    },
+    "optional": {},
+    "example": "examples/steps/declare-map.json",
+    "behavior": "Creates a data-area alias using the named map schema. Redeclaration replaces the alias's current data; the host supplies schema details and defaults.",
+    "profiles": ["bpa-1"]
+  },
+  {
+    "id": "bpa.step.default-variable",
+    "name": "default-variable",
+    "purpose": "Supplies a default value.",
+    "representation": "expansion-only",
+    "required": {
+      "variable": "string"
+    },
+    "optional": {
+      "value": "string"
+    },
+    "example": "examples/steps/default-variable.json",
+    "behavior": "Supplies a temporary-variable default without unconditionally replacing an existing value.",
+    "profiles": ["bpa-1"]
+  },
+  {
+    "id": "bpa.step.edit-data",
+    "name": "edit-data",
+    "purpose": "Embeds textual statements.",
+    "representation": "authorable",
+    "required": {
+      "script": "string"
+    },
+    "optional": {},
+    "example": "examples/steps/edit-data.json",
+    "behavior": "Supplies a body of textual statements for expansion into browser instructions. Labels, variables, and data areas are shared with the surrounding script; no outer edit data wrapper belongs in this body. A disabled whole step is still parsed and expanded, and its labels remain registered and subject to validation. Disabling does not hide malformed syntax or unresolved or duplicate labels.",
+    "profiles": ["bpa-1"]
+  }
+]

@@ -1,0 +1,10 @@
+{
+  "profile": "bpa-1",
+  "steps": [
+    {
+      "sequence": 10,
+      "kind": "terminate",
+      "fields": {}
+    }
+  ]
+}

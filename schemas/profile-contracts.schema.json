@@ -1,0 +1,179 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Profile language contracts",
+  "description": "Profile-specific syntax entry points, representations, command applicability, and language boundaries.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "profiles"],
+  "properties": {
+    "schemaVersion": { "const": 2 },
+    "profiles": {
+      "type": "array",
+      "minItems": 6,
+      "maxItems": 6,
+      "items": { "$ref": "#/definitions/profile" }
+    }
+  },
+  "definitions": {
+    "strings": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "profile": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "engineCode",
+        "scriptTypes",
+        "execution",
+        "expressionLanguage",
+        "representations",
+        "sourceStepsByScriptType",
+        "grammar",
+        "commandForms",
+        "restrictions"
+      ],
+      "properties": {
+        "id": {
+          "enum": [
+            "bpa-1",
+            "bpa-legacy",
+            "server-1",
+            "server-2",
+            "server-3",
+            "groovy"
+          ]
+        },
+        "engineCode": { "enum": ["F110", "F11C", "F120", "F130", "F1GV"] },
+        "scriptTypes": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "enum": ["bpa", "service", "plug-in", "groovy-library"] }
+        },
+        "execution": { "enum": ["browser", "server"] },
+        "expressionLanguage": { "type": "string", "minLength": 1 },
+        "representations": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "enum": [
+              "edit-data-body",
+              "normalized-browser-steps",
+              "legacy-structured-steps",
+              "groovy-source-contributions"
+            ]
+          }
+        },
+        "sourceStepsByScriptType": {
+          "type": "object",
+          "minProperties": 1,
+          "additionalProperties": false,
+          "patternProperties": {
+            "^(bpa|service|plug-in|groovy-library)$": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["code", "name"],
+                "properties": {
+                  "code": { "type": "string", "pattern": "^[A-Z]+$" },
+                  "name": { "type": "string", "minLength": 1 }
+                }
+              }
+            }
+          }
+        },
+        "grammar": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "kind",
+                "path",
+                "name",
+                "entryPoint",
+                "sharedGrammar",
+                "completeInput",
+                "syntaxScope"
+              ],
+              "properties": {
+                "kind": { "const": "edit-data" },
+                "path": {
+                  "type": "string",
+                  "pattern": "^grammar/(bpa-1|bpa-legacy|server-1|server-2|server-3)/[A-Z][A-Za-z0-9]*\\.g4$"
+                },
+                "name": { "type": "string", "pattern": "^[A-Z][A-Za-z0-9]*$" },
+                "entryPoint": { "const": "program" },
+                "sharedGrammar": { "const": "grammar/EditData.g4" },
+                "completeInput": { "const": true },
+                "syntaxScope": { "type": "string", "minLength": 10 }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "kind",
+                "languageReference",
+                "integrationReference",
+                "syntaxScope"
+              ],
+              "properties": {
+                "kind": { "const": "external-groovy" },
+                "languageReference": {
+                  "const": "https://groovy-lang.org/documentation.html"
+                },
+                "integrationReference": {
+                  "const": "specification/groovy-integration.md"
+                },
+                "syntaxScope": { "type": "string", "minLength": 10 }
+              }
+            }
+          ]
+        },
+        "commandForms": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "command",
+              "syntaxRule",
+              "applicability",
+              "includedInGrammar"
+            ],
+            "properties": {
+              "command": {
+                "type": "string",
+                "pattern": "^bpa\\.command\\.[a-zA-Z0-9-]+$"
+              },
+              "syntaxRule": {
+                "type": "string",
+                "pattern": "^[a-z][a-zA-Z0-9]*$"
+              },
+              "applicability": {
+                "enum": [
+                  "supported",
+                  "limited",
+                  "unsafe",
+                  "no-step",
+                  "unavailable"
+                ]
+              },
+              "includedInGrammar": { "type": "boolean" }
+            }
+          }
+        },
+        "restrictions": { "$ref": "#/definitions/strings" }
+      }
+    }
+  }
+}

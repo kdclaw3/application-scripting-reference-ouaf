@@ -1,0 +1,19 @@
+{
+  "profile": "bpa-1",
+  "steps": [
+    {
+      "sequence": 10,
+      "kind": "for",
+      "fields": {
+        "variable": "$item",
+        "expression": "items/item",
+        "exitTarget": 20
+      }
+    },
+    {
+      "sequence": 20,
+      "kind": "terminate",
+      "fields": {}
+    }
+  ]
+}

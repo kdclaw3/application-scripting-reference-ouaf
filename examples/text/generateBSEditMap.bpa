@@ -1,0 +1,1 @@
+generateBSEditMap 'ExampleMap' using "example" target bpa;

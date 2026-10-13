@@ -1,0 +1,1229 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "BPA structured step representation",
+  "description": "The normalized JSON notation used by this specification to describe ordered browser BPA structured steps. It is neither a server instruction format nor a host application import format.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["profile", "steps"],
+  "properties": {
+    "profile": {
+      "const": "bpa-1"
+    },
+    "steps": {
+      "type": "array",
+      "items": {
+        "oneOf": [
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["sequence", "kind", "fields"],
+            "properties": {
+              "sequence": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "kind": {
+                "const": "display-text"
+              },
+              "enabled": {
+                "type": "boolean"
+              },
+              "fields": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["text"],
+                "properties": {
+                  "text": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                }
+              }
+            }
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["sequence", "kind", "fields"],
+            "properties": {
+              "sequence": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "kind": {
+                "const": "navigate"
+              },
+              "enabled": {
+                "type": "boolean"
+              },
+              "fields": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["target"],
+                "properties": {
+                  "target": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                }
+              }
+            }
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["sequence", "kind", "fields"],
+            "properties": {
+              "sequence": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "kind": {
+                "const": "navigate-refresh"
+              },
+              "enabled": {
+                "type": "boolean"
+              },
+              "fields": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["target"],
+                "properties": {
+                  "target": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                }
+              }
+            }
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["sequence", "kind", "fields"],
+            "properties": {
+              "sequence": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "kind": {
+                "const": "goto"
+              },
+              "enabled": {
+                "type": "boolean"
+              },
+              "fields": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["target"],
+                "properties": {
+                  "target": {
+                    "type": "integer",
+                    "minimum": 1
+                  }
+                }
+              }
+            }
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["sequence", "kind", "fields"],
+            "properties": {
+              "sequence": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "kind": {
+                "const": "press-button"
+              },
+              "enabled": {
+                "type": "boolean"
+              },
+              "fields": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["button"],
+                "properties": {
+                  "button": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                }
+              }
+            }
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["sequence", "kind", "fields"],
+            "properties": {
+              "sequence": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "kind": {
+                "const": "input"
+              },
+              "enabled": {
+                "type": "boolean"
+              },
+              "fields": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["destination"],
+                "properties": {
+                  "destination": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "text": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "choices": {
+                    "type": "array",
+                    "minItems": 1,
+                    "items": {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "required": ["text", "target"],
+                      "properties": {
+                        "text": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "target": {
+                          "type": "integer",
+                          "minimum": 1
+                        },
+                        "default": {
+                          "type": "boolean"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["sequence", "kind", "fields"],
+            "properties": {
+              "sequence": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "kind": {
+                "const": "prompt"
+              },
+              "enabled": {
+                "type": "boolean"
+              },
+              "fields": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["choices"],
+                "properties": {
+                  "choices": {
+                    "type": "array",
+                    "minItems": 1,
+                    "items": {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "required": ["text", "target"],
+                      "properties": {
+                        "text": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "target": {
+                          "type": "integer",
+                          "minimum": 1
+                        },
+                        "default": {
+                          "type": "boolean"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["sequence", "kind", "fields"],
+            "properties": {
+              "sequence": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "kind": {
+                "const": "move"
+              },
+              "enabled": {
+                "type": "boolean"
+              },
+              "fields": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["source", "destination"],
+                "properties": {
+                  "source": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "destination": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                }
+              }
+            }
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["sequence", "kind", "fields"],
+            "properties": {
+              "sequence": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "kind": {
+                "const": "conditional"
+              },
+              "enabled": {
+                "type": "boolean"
+              },
+              "fields": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["condition", "trueTarget", "falseTarget"],
+                "properties": {
+                  "condition": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "trueTarget": {
+                    "type": "integer",
+                    "minimum": 1
+                  },
+                  "falseTarget": {
+                    "type": "integer",
+                    "minimum": 1
+                  }
+                }
+              }
+            }
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["sequence", "kind", "fields"],
+            "properties": {
+              "sequence": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "kind": {
+                "const": "focus"
+              },
+              "enabled": {
+                "type": "boolean"
+              },
+              "fields": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["field", "text"],
+                "properties": {
+                  "field": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "text": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "choices": {
+                    "type": "array",
+                    "minItems": 1,
+                    "items": {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "required": ["text", "target"],
+                      "properties": {
+                        "text": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "target": {
+                          "type": "integer",
+                          "minimum": 1
+                        },
+                        "default": {
+                          "type": "boolean"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["sequence", "kind", "fields"],
+            "properties": {
+              "sequence": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "kind": {
+                "const": "math"
+              },
+              "enabled": {
+                "type": "boolean"
+              },
+              "fields": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["source", "destination", "operator"],
+                "properties": {
+                  "source": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "destination": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "operator": {
+                    "enum": ["+", "-", "*", "/"]
+                  }
+                }
+              }
+            }
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["sequence", "kind", "fields"],
+            "properties": {
+              "sequence": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "kind": {
+                "const": "label"
+              },
+              "enabled": {
+                "type": "boolean"
+              },
+              "fields": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["text"],
+                "properties": {
+                  "text": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                }
+              }
+            }
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["sequence", "kind", "fields"],
+            "properties": {
+              "sequence": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "kind": {
+                "const": "height"
+              },
+              "enabled": {
+                "type": "boolean"
+              },
+              "fields": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["height", "unit"],
+                "properties": {
+                  "height": {
+                    "type": "number",
+                    "exclusiveMinimum": 0
+                  },
+                  "unit": {
+                    "enum": ["percent", "pixels"]
+                  }
+                }
+              }
+            }
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["sequence", "kind", "fields"],
+            "properties": {
+              "sequence": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "kind": {
+                "const": "function"
+              },
+              "enabled": {
+                "type": "boolean"
+              },
+              "fields": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["target", "successTarget", "errorTarget"],
+                "properties": {
+                  "target": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "successTarget": {
+                    "type": "integer",
+                    "minimum": 1
+                  },
+                  "errorTarget": {
+                    "type": "integer",
+                    "minimum": 1
+                  }
+                }
+              }
+            }
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["sequence", "kind", "fields"],
+            "properties": {
+              "sequence": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "kind": {
+                "const": "transfer-control"
+              },
+              "enabled": {
+                "type": "boolean"
+              },
+              "fields": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["target"],
+                "properties": {
+                  "target": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                }
+              }
+            }
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["sequence", "kind", "fields"],
+            "properties": {
+              "sequence": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "kind": {
+                "const": "perform-script"
+              },
+              "enabled": {
+                "type": "boolean"
+              },
+              "fields": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["target"],
+                "properties": {
+                  "target": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                }
+              }
+            }
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["sequence", "kind", "fields"],
+            "properties": {
+              "sequence": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "kind": {
+                "const": "invoke-service-script"
+              },
+              "enabled": {
+                "type": "boolean"
+              },
+              "fields": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "target",
+                  "dataArea",
+                  "successTarget",
+                  "errorTarget"
+                ],
+                "properties": {
+                  "target": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "dataArea": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "successTarget": {
+                    "type": "integer",
+                    "minimum": 1
+                  },
+                  "errorTarget": {
+                    "type": "integer",
+                    "minimum": 1
+                  }
+                }
+              }
+            }
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["sequence", "kind", "fields"],
+            "properties": {
+              "sequence": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "kind": {
+                "const": "invoke-business-object"
+              },
+              "enabled": {
+                "type": "boolean"
+              },
+              "fields": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "target",
+                  "dataArea",
+                  "action",
+                  "successTarget",
+                  "errorTarget"
+                ],
+                "properties": {
+                  "target": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "dataArea": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "action": {
+                    "enum": [
+                      "read",
+                      "readWithoutVersion",
+                      "add",
+                      "fastAdd",
+                      "update",
+                      "fastUpdate",
+                      "delete",
+                      "replace"
+                    ]
+                  },
+                  "successTarget": {
+                    "type": "integer",
+                    "minimum": 1
+                  },
+                  "errorTarget": {
+                    "type": "integer",
+                    "minimum": 1
+                  }
+                }
+              }
+            }
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["sequence", "kind", "fields"],
+            "properties": {
+              "sequence": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "kind": {
+                "const": "invoke-business-service"
+              },
+              "enabled": {
+                "type": "boolean"
+              },
+              "fields": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "target",
+                  "dataArea",
+                  "successTarget",
+                  "errorTarget"
+                ],
+                "properties": {
+                  "target": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "dataArea": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "successTarget": {
+                    "type": "integer",
+                    "minimum": 1
+                  },
+                  "errorTarget": {
+                    "type": "integer",
+                    "minimum": 1
+                  }
+                }
+              }
+            }
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["sequence", "kind", "fields"],
+            "properties": {
+              "sequence": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "kind": {
+                "const": "invoke-map"
+              },
+              "enabled": {
+                "type": "boolean"
+              },
+              "fields": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["target"],
+                "properties": {
+                  "target": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "dataArea": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "display": {
+                    "enum": ["bpa", "page", "popup"]
+                  },
+                  "choices": {
+                    "type": "array",
+                    "minItems": 1,
+                    "items": {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "required": ["text", "target"],
+                      "properties": {
+                        "text": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "target": {
+                          "type": "integer",
+                          "minimum": 1
+                        },
+                        "default": {
+                          "type": "boolean"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["sequence", "kind", "fields"],
+            "properties": {
+              "sequence": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "kind": {
+                "const": "for"
+              },
+              "enabled": {
+                "type": "boolean"
+              },
+              "fields": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["variable", "expression", "exitTarget"],
+                "properties": {
+                  "variable": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "expression": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "exitTarget": {
+                    "type": "integer",
+                    "minimum": 1
+                  }
+                }
+              }
+            }
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["sequence", "kind", "fields"],
+            "properties": {
+              "sequence": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "kind": {
+                "const": "terminate"
+              },
+              "enabled": {
+                "type": "boolean"
+              },
+              "fields": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [],
+                "properties": {
+                  "errorScript": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                }
+              }
+            }
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["sequence", "kind", "fields"],
+            "properties": {
+              "sequence": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "kind": {
+                "const": "generate-object-map"
+              },
+              "enabled": {
+                "type": "boolean"
+              },
+              "fields": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["target"],
+                "properties": {
+                  "target": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "dataArea": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "display": {
+                    "enum": ["bpa", "page", "popup"]
+                  }
+                }
+              }
+            }
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["sequence", "kind", "fields"],
+            "properties": {
+              "sequence": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "kind": {
+                "const": "generate-service-map"
+              },
+              "enabled": {
+                "type": "boolean"
+              },
+              "fields": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["target"],
+                "properties": {
+                  "target": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "dataArea": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "display": {
+                    "enum": ["bpa", "page", "popup"]
+                  }
+                }
+              }
+            }
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["sequence", "kind", "fields"],
+            "properties": {
+              "sequence": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "kind": {
+                "const": "generate-data-map"
+              },
+              "enabled": {
+                "type": "boolean"
+              },
+              "fields": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["target"],
+                "properties": {
+                  "target": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "dataArea": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "display": {
+                    "enum": ["bpa", "page", "popup"]
+                  }
+                }
+              }
+            }
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["sequence", "kind", "fields"],
+            "properties": {
+              "sequence": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "kind": {
+                "const": "generate-script-map"
+              },
+              "enabled": {
+                "type": "boolean"
+              },
+              "fields": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["target"],
+                "properties": {
+                  "target": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "dataArea": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "display": {
+                    "enum": ["bpa", "page", "popup"]
+                  }
+                }
+              }
+            }
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["sequence", "kind", "fields"],
+            "properties": {
+              "sequence": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "kind": {
+                "const": "declare-object"
+              },
+              "enabled": {
+                "type": "boolean"
+              },
+              "fields": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["target", "alias"],
+                "properties": {
+                  "target": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "alias": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                }
+              }
+            }
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["sequence", "kind", "fields"],
+            "properties": {
+              "sequence": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "kind": {
+                "const": "declare-grouped-object"
+              },
+              "enabled": {
+                "type": "boolean"
+              },
+              "fields": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["target", "alias"],
+                "properties": {
+                  "target": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "alias": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                }
+              }
+            }
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["sequence", "kind", "fields"],
+            "properties": {
+              "sequence": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "kind": {
+                "const": "declare-service"
+              },
+              "enabled": {
+                "type": "boolean"
+              },
+              "fields": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["target", "alias"],
+                "properties": {
+                  "target": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "alias": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                }
+              }
+            }
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["sequence", "kind", "fields"],
+            "properties": {
+              "sequence": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "kind": {
+                "const": "declare-data"
+              },
+              "enabled": {
+                "type": "boolean"
+              },
+              "fields": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["target", "alias"],
+                "properties": {
+                  "target": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "alias": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                }
+              }
+            }
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["sequence", "kind", "fields"],
+            "properties": {
+              "sequence": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "kind": {
+                "const": "declare-script"
+              },
+              "enabled": {
+                "type": "boolean"
+              },
+              "fields": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["target", "alias"],
+                "properties": {
+                  "target": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "alias": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                }
+              }
+            }
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["sequence", "kind", "fields"],
+            "properties": {
+              "sequence": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "kind": {
+                "const": "declare-map"
+              },
+              "enabled": {
+                "type": "boolean"
+              },
+              "fields": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["target", "alias"],
+                "properties": {
+                  "target": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "alias": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                }
+              }
+            }
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["sequence", "kind", "fields"],
+            "properties": {
+              "sequence": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "kind": {
+                "const": "default-variable"
+              },
+              "enabled": {
+                "type": "boolean"
+              },
+              "fields": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["variable"],
+                "properties": {
+                  "variable": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "value": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                }
+              }
+            }
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["sequence", "kind", "fields"],
+            "properties": {
+              "sequence": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "kind": {
+                "const": "edit-data"
+              },
+              "enabled": {
+                "type": "boolean"
+              },
+              "fields": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["script"],
+                "properties": {
+                  "script": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  }
+}

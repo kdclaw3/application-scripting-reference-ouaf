@@ -1,0 +1,5 @@
+move 'ready' to $state;
+move "$state" to $copiedState;
+move 'shared text' to $$requestNote;
+move $$requestNote to $copiedNote;
+move escape($state) to $escapedState;

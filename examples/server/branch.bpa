@@ -1,0 +1,6 @@
+move 'ready' to $state;
+branch ("$state = 'ready'") goto ready;
+move 'waiting' to $result;
+goto finished;
+ready: move 'ready' to $result;
+finished: label 'Continue';

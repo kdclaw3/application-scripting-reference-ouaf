@@ -1,0 +1,5 @@
+// The host supplies a declared request area with zero or more item elements.
+for ($item in "request/items/item")
+  move "$item/name" to $lastName;
+end-for;
+// After a nonempty loop, $item still holds its final server loop value.

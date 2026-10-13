@@ -1,0 +1,28 @@
+{
+  "name": "application-scripting-reference-ouaf",
+  "version": "0.5.0",
+  "private": true,
+  "license": "MIT",
+  "description": "A reference for BPA, shared Edit Data syntax, server engine profiles, and Groovy integration",
+  "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "build": "node tools/docs.mjs",
+    "docs": "npm run build",
+    "check:reference": "node tools/check-reference.mjs",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
+  },
+  "dependencies": {
+    "ajv": "8.20.0"
+  },
+  "devDependencies": {
+    "antlr-ng": "1.0.10",
+    "antlr4ng": "3.0.16",
+    "marked": "18.1.0",
+    "prettier": "3.6.2",
+    "typescript": "5.9.3"
+  }
+}

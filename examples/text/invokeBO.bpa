@@ -1,0 +1,1 @@
+invokeBO 'ExampleService' using "example" for read;

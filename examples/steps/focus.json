@@ -1,0 +1,18 @@
+{
+  "profile": "bpa-1",
+  "steps": [
+    {
+      "sequence": 10,
+      "kind": "focus",
+      "fields": {
+        "field": "example",
+        "text": "Review the selected field"
+      }
+    },
+    {
+      "sequence": 20,
+      "kind": "terminate",
+      "fields": {}
+    }
+  ]
+}

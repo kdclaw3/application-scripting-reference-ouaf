@@ -1,0 +1,4 @@
+edit data
+  move 'ready' to $state;
+  move "$state" to $result;
+end-edit;

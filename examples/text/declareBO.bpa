@@ -1,0 +1,1 @@
+declareBO 'ExampleSchema' as 'example';

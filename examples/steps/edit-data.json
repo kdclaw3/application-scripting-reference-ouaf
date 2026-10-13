@@ -1,0 +1,17 @@
+{
+  "profile": "bpa-1",
+  "steps": [
+    {
+      "sequence": 10,
+      "kind": "edit-data",
+      "fields": {
+        "script": "move 'ready' to $status;"
+      }
+    },
+    {
+      "sequence": 20,
+      "kind": "terminate",
+      "fields": {}
+    }
+  ]
+}

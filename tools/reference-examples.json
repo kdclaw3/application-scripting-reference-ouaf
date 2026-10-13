@@ -1,0 +1,264 @@
+{
+  "schemaVersion": 1,
+  "text": [
+    {
+      "path": "examples/restrictions/branch.bpa",
+      "profiles": ["bpa-1", "bpa-legacy"]
+    },
+    {
+      "path": "examples/restrictions/edit.bpa",
+      "profiles": ["bpa-1", "bpa-legacy"]
+    },
+    {
+      "path": "examples/restrictions/label.bpa",
+      "profiles": ["bpa-1", "bpa-legacy"]
+    },
+    {
+      "path": "examples/server/branch.bpa",
+      "profiles": ["server-1", "server-2", "server-3"]
+    },
+    {
+      "path": "examples/server/edit.bpa",
+      "profiles": ["server-1", "server-2", "server-3"]
+    },
+    {
+      "path": "examples/server/for.bpa",
+      "profiles": ["server-1", "server-2", "server-3"]
+    },
+    {
+      "path": "examples/server/goto.bpa",
+      "profiles": ["server-1", "server-2", "server-3"]
+    },
+    {
+      "path": "examples/server/if.bpa",
+      "profiles": ["server-1", "server-2", "server-3"]
+    },
+    {
+      "path": "examples/server/invokeBO.bpa",
+      "profiles": ["server-1", "server-2", "server-3"]
+    },
+    {
+      "path": "examples/server/invokeBS.bpa",
+      "profiles": ["server-1", "server-2", "server-3"]
+    },
+    {
+      "path": "examples/server/invokeGroovy.bpa",
+      "profiles": ["server-1", "server-2", "server-3"]
+    },
+    {
+      "path": "examples/server/invokeSS.bpa",
+      "profiles": ["server-1", "server-2", "server-3"]
+    },
+    {
+      "path": "examples/server/label.bpa",
+      "profiles": ["server-1", "server-2", "server-3"]
+    },
+    {
+      "path": "examples/server/move.bpa",
+      "profiles": ["server-1", "server-2", "server-3"]
+    },
+    {
+      "path": "examples/server/terminate.bpa",
+      "profiles": ["server-1", "server-2", "server-3"]
+    },
+    {
+      "path": "examples/text/combined.bpa",
+      "profiles": ["bpa-1", "bpa-legacy"]
+    },
+    {
+      "path": "examples/text/declareBO.bpa",
+      "profiles": ["bpa-1", "bpa-legacy"]
+    },
+    {
+      "path": "examples/text/declareBOWithBOGroup.bpa",
+      "profiles": ["bpa-1", "bpa-legacy"]
+    },
+    {
+      "path": "examples/text/declareBS.bpa",
+      "profiles": ["bpa-1", "bpa-legacy"]
+    },
+    {
+      "path": "examples/text/declareDA.bpa",
+      "profiles": ["bpa-1", "bpa-legacy"]
+    },
+    {
+      "path": "examples/text/declareMap.bpa",
+      "profiles": ["bpa-1", "bpa-legacy"]
+    },
+    {
+      "path": "examples/text/declareSS.bpa",
+      "profiles": ["bpa-1", "bpa-legacy"]
+    },
+    {
+      "path": "examples/text/default.bpa",
+      "profiles": ["bpa-1", "bpa-legacy", "server-1", "server-2", "server-3"]
+    },
+    {
+      "path": "examples/text/for.bpa",
+      "profiles": ["bpa-1", "bpa-legacy"]
+    },
+    {
+      "path": "examples/text/generateBOEditMap.bpa",
+      "profiles": ["bpa-1", "bpa-legacy"]
+    },
+    {
+      "path": "examples/text/generateBSEditMap.bpa",
+      "profiles": ["bpa-1", "bpa-legacy"]
+    },
+    {
+      "path": "examples/text/generateDAEditMap.bpa",
+      "profiles": ["bpa-1", "bpa-legacy"]
+    },
+    {
+      "path": "examples/text/generateSSEditMap.bpa",
+      "profiles": ["bpa-1", "bpa-legacy"]
+    },
+    {
+      "path": "examples/text/goto.bpa",
+      "profiles": ["bpa-1", "bpa-legacy"]
+    },
+    {
+      "path": "examples/text/if.bpa",
+      "profiles": ["bpa-1", "bpa-legacy"]
+    },
+    {
+      "path": "examples/text/invokeBO.bpa",
+      "profiles": ["bpa-1", "bpa-legacy"]
+    },
+    {
+      "path": "examples/text/invokeBS.bpa",
+      "profiles": ["bpa-1", "bpa-legacy"]
+    },
+    {
+      "path": "examples/text/invokeMap.bpa",
+      "profiles": ["bpa-1", "bpa-legacy"]
+    },
+    {
+      "path": "examples/text/invokeSS.bpa",
+      "profiles": ["bpa-1", "bpa-legacy"]
+    },
+    {
+      "path": "examples/text/move.bpa",
+      "profiles": ["bpa-1", "bpa-legacy"]
+    },
+    {
+      "path": "examples/text/navigate.bpa",
+      "profiles": ["bpa-1", "bpa-legacy"]
+    },
+    {
+      "path": "examples/text/navigateAndReloadDashboard.bpa",
+      "profiles": ["bpa-1", "bpa-legacy"]
+    },
+    {
+      "path": "examples/text/performScript.bpa",
+      "profiles": ["bpa-1", "bpa-legacy"]
+    },
+    {
+      "path": "examples/text/terminate.bpa",
+      "profiles": ["bpa-1", "bpa-legacy"]
+    },
+    {
+      "path": "examples/text/transferControl.bpa",
+      "profiles": ["bpa-1", "bpa-legacy"]
+    }
+  ],
+  "markdown": [
+    {
+      "path": "README.md",
+      "blocks": [
+        {
+          "index": 0,
+          "language": "text",
+          "kind": "edit-data",
+          "profiles": [
+            "bpa-1",
+            "bpa-legacy",
+            "server-1",
+            "server-2",
+            "server-3"
+          ]
+        },
+        {
+          "index": 1,
+          "language": "sh",
+          "kind": "shell",
+          "reason": "Maintainer shell commands are not scripting-language examples."
+        }
+      ]
+    },
+    {
+      "path": "specification/data-model.md",
+      "blocks": [
+        {
+          "index": 0,
+          "language": "text",
+          "kind": "edit-data",
+          "profiles": [
+            "bpa-1",
+            "bpa-legacy",
+            "server-1",
+            "server-2",
+            "server-3"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "specification/execution-model.md",
+      "blocks": [
+        {
+          "index": 0,
+          "language": "text",
+          "kind": "edit-data",
+          "profiles": ["bpa-1", "bpa-legacy"]
+        }
+      ]
+    },
+    {
+      "path": "specification/groovy-integration.md",
+      "blocks": [
+        {
+          "index": 0,
+          "language": "text",
+          "kind": "groovy-source",
+          "reason": "Groovy source and its container delimiters are outside the Edit Data grammar."
+        },
+        {
+          "index": 1,
+          "language": "text",
+          "kind": "edit-data",
+          "profiles": ["server-1", "server-2", "server-3"]
+        },
+        {
+          "index": 2,
+          "language": "text",
+          "kind": "groovy-source",
+          "reason": "Groovy source and its container delimiters are outside the Edit Data grammar."
+        },
+        {
+          "index": 3,
+          "language": "groovy",
+          "kind": "groovy-source",
+          "reason": "Groovy source and its container delimiters are outside the Edit Data grammar."
+        }
+      ]
+    },
+    {
+      "path": "specification/lexical-structure.md",
+      "blocks": [
+        {
+          "index": 0,
+          "language": "text",
+          "kind": "edit-data",
+          "profiles": [
+            "bpa-1",
+            "bpa-legacy",
+            "server-1",
+            "server-2",
+            "server-3"
+          ]
+        }
+      ]
+    }
+  ]
+}

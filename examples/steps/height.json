@@ -1,0 +1,18 @@
+{
+  "profile": "bpa-1",
+  "steps": [
+    {
+      "sequence": 10,
+      "kind": "height",
+      "fields": {
+        "height": 50,
+        "unit": "percent"
+      }
+    },
+    {
+      "sequence": 20,
+      "kind": "terminate",
+      "fields": {}
+    }
+  ]
+}

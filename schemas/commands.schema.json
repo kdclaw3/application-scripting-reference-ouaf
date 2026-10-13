@@ -1,0 +1,93 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "BPA and server command reference",
+  "description": "Shared command syntax with explicit applicability and behavior for every documented execution profile.",
+  "type": "array",
+  "minItems": 1,
+  "definitions": {
+    "profiles": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "enum": [
+          "bpa-1",
+          "bpa-legacy",
+          "server-1",
+          "server-2",
+          "server-3",
+          "groovy"
+        ]
+      }
+    },
+    "example": {
+      "type": "string",
+      "pattern": "^examples/(text|restrictions|server)/[a-zA-Z0-9-]+\\.bpa$"
+    },
+    "strings": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 }
+    }
+  },
+  "items": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+      "id",
+      "name",
+      "kind",
+      "grammarRule",
+      "purpose",
+      "operands",
+      "variants",
+      "example",
+      "exampleProfiles",
+      "related",
+      "exampleRole"
+    ],
+    "properties": {
+      "id": { "type": "string", "pattern": "^bpa\\.command\\.[a-zA-Z0-9-]+$" },
+      "name": { "type": "string", "minLength": 1 },
+      "kind": { "const": "command" },
+      "grammarRule": { "type": "string", "pattern": "^[a-zA-Z][a-zA-Z0-9]*$" },
+      "purpose": { "type": "string", "minLength": 10 },
+      "operands": { "$ref": "#/definitions/strings" },
+      "example": { "$ref": "#/definitions/example" },
+      "exampleProfiles": { "$ref": "#/definitions/profiles" },
+      "related": { "$ref": "#/definitions/strings" },
+      "exampleRole": { "enum": ["usage", "caution"] },
+      "variants": {
+        "type": "array",
+        "minItems": 1,
+        "maxItems": 6,
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "profiles",
+            "status",
+            "behavior",
+            "constraints",
+            "errors"
+          ],
+          "properties": {
+            "profiles": { "$ref": "#/definitions/profiles" },
+            "status": {
+              "enum": [
+                "supported",
+                "limited",
+                "unsafe",
+                "unavailable",
+                "no-step"
+              ]
+            },
+            "behavior": { "type": "string", "minLength": 10 },
+            "constraints": { "$ref": "#/definitions/strings" },
+            "errors": { "$ref": "#/definitions/strings" },
+            "example": { "$ref": "#/definitions/example" }
+          }
+        }
+      }
+    }
+  }
+}

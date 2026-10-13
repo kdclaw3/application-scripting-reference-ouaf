@@ -1,0 +1,4 @@
+// ExamplePrepare is a synthetic service script supplied by the host.
+declareSS 'ExamplePrepare' as 'request';
+move 'sample' to "request/value";
+invokeSS 'ExamplePrepare' using "request";

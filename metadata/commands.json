@@ -1,0 +1,1260 @@
+[
+  {
+    "id": "bpa.command.move",
+    "name": "move",
+    "kind": "command",
+    "grammarRule": "assignment",
+    "purpose": "Copies, clears, or evaluates a value into a destination.",
+    "operands": ["source", "destination"],
+    "example": "examples/text/move.bpa",
+    "related": ["bpa.model.control-flow", "bpa.model.data"],
+    "exampleRole": "usage",
+    "exampleProfiles": ["bpa-1"],
+    "variants": [
+      {
+        "profiles": ["bpa-1"],
+        "status": "limited",
+        "behavior": "Copies or clears the selected destination and continues. A node moved into a temporary variable can remain a reference to that node. Dynamic evaluation uses the current expression and XML context.",
+        "constraints": [
+          "Use a literal, relative expression, null, or a quoted temporary-variable expression as the source. A destination can be a temporary variable, data-area path, or evaluate(...) path.",
+          "A bare $name move source converts to a data-area source named name. A double-$ source fails conversion; a double-$ destination becomes a data-area destination.",
+          "The escape(...) instruction is not preserved by the BPA conversion. Literal source text may contain host %NAME substitutions.",
+          "Move destinations use the data-area path language. The root cannot start with / or +; append segments belong below a named root.",
+          "A plain single-quoted destination is recognized by the shared syntax but is not a usable data-area path. Write a destination path in double quotes; single quotes retain literal delimiters rather than selecting that path."
+        ],
+        "errors": [
+          "A double-$ move source cannot be converted to a browser instruction.",
+          "A destination must have a named data-area root; leading / or + is outside the destination-path language."
+        ]
+      },
+      {
+        "profiles": ["bpa-legacy"],
+        "status": "limited",
+        "behavior": "Uses the browser move operation with legacy null and empty-selection rules. A legacy clear is represented as a data-area-to-data-area move from %NULL. A source encoded with the modern null source kind does not automatically obtain that legacy clear behavior.",
+        "constraints": [
+          "Use the legacy structured null representation when clearing data. Do not assume textual move null has the same result as ordinary browser engine 1.",
+          "A direct path-selection result with no nodes can be an empty string rather than null; complex-expression fallback behavior depends on the browser path used.",
+          "Quoted \"$name\" reads a local value. Bare $name remains a data-area source, $$source cannot be converted, and $$destination becomes a data-area destination.",
+          "The escape(...) marker is not retained by browser conversion. Destination paths use the browser data-area rules.",
+          "A plain single-quoted destination is recognized by the shared syntax but is not a usable data-area path. Write a destination path in double quotes; single quotes retain literal delimiters rather than selecting that path."
+        ],
+        "errors": ["An unsupported global source or destination shape fails."]
+      },
+      {
+        "profiles": ["server-1", "server-2"],
+        "status": "supported",
+        "behavior": "Evaluates the source and writes a local variable, request-context variable, or schema-aware data-area destination. A selected element assigned to a local variable remains the evaluated element; later changes may be visible through that reference. Normal execution continues with the next statement.",
+        "constraints": [
+          "Use quoted \"$name\" to read a local variable. A bare $name source is treated as the XPath text name; evaluate($name) and escape($name) explicitly read the local variable before applying their operation.",
+          "$$name reads or writes a request-context string value. A list cannot be assigned to a request-context variable; an element contributes its text content.",
+          "evaluate(...) first resolves an expression or path string and then evaluates it. escape(...) HTML-escapes a resolved path or local-variable value. Wrapping a $$ source does not apply these transformations: its global read is handled first.",
+          "A null data-area move clears according to the destination schema. A null source assigned to a local variable supplies the text null; it is not a universal variable-deletion operation.",
+          "Destination paths have a named data-area root. Data-area target navigation uses the host destination-path rules and XPath 1 selection even when the source expression uses XPath 2.",
+          "A plain single-quoted destination is recognized by the shared syntax but is not a usable data-area path. Write a destination path in double quotes; single quotes retain literal delimiters rather than selecting that path."
+        ],
+        "errors": [
+          "An unresolved dynamic source fails. Unsupported target shapes fail. A null source is not permitted for a move-by-name target ending in /*."
+        ],
+        "example": "examples/server/move.bpa"
+      },
+      {
+        "profiles": ["server-3"],
+        "status": "supported",
+        "behavior": "Evaluates and assigns using the server move rules. When a selected element is assigned directly to a local variable, the element is copied into a fresh document. That variable therefore does not retain the source element identity. The copy rule concerns an element value and does not promise deep copying of every possible result shape.",
+        "constraints": [
+          "Use quoted \"$name\" for a local-variable read; bare $name is evaluated as the XPath text name. evaluate($name) and escape($name) explicitly resolve the local variable.",
+          "$$name accesses request-context string values. A list cannot be stored there; an element contributes its text content.",
+          "evaluate(...) resolves and evaluates a dynamic expression. escape(...) HTML-escapes a resolved value. A global-source read occurs before either wrapper transformation.",
+          "Source expressions use XPath 2. Destination navigation retains the host destination-path rules and XPath 1 selection.",
+          "A null data-area move clears according to schema rules; a null source assigned to a local variable supplies the text null. It does not delete the variable.",
+          "A plain single-quoted destination is recognized by the shared syntax but is not a usable data-area path. Write a destination path in double quotes; single quotes retain literal delimiters rather than selecting that path."
+        ],
+        "errors": [
+          "An unresolved dynamic source, unsupported destination, list-to-global assignment, or null move-by-name target fails."
+        ],
+        "example": "examples/server/move.bpa"
+      },
+      {
+        "profiles": ["groovy"],
+        "status": "unavailable",
+        "behavior": "This is an Edit Data command, not a statement in the Groovy language. A script using the Groovy engine uses its Groovy entry point and host APIs.",
+        "constraints": [
+          "Use the Groovy integration profile for lifecycle and host-access rules."
+        ],
+        "errors": []
+      }
+    ]
+  },
+  {
+    "id": "bpa.command.if",
+    "name": "if",
+    "kind": "command",
+    "grammarRule": "conditional",
+    "purpose": "Chooses one statement block according to a condition.",
+    "operands": ["condition", "then-block", "optional else-block"],
+    "example": "examples/text/if.bpa",
+    "related": ["bpa.model.control-flow", "bpa.model.data"],
+    "exampleRole": "usage",
+    "exampleProfiles": ["bpa-1"],
+    "variants": [
+      {
+        "profiles": ["bpa-1", "bpa-legacy"],
+        "status": "supported",
+        "behavior": "Chooses the true body only when the browser condition result equals true; otherwise takes the alternate path. Execution rejoins after the selected body.",
+        "constraints": [
+          "The condition is a quoted expression inside parentheses. Close the construct with end-if and a semicolon."
+        ],
+        "errors": []
+      },
+      {
+        "profiles": ["server-1", "server-2", "server-3"],
+        "status": "supported",
+        "behavior": "Evaluates the condition, executes the selected block, and then continues unless that block transfers control or terminates. A missing else means no alternate body.",
+        "constraints": [
+          "The single result must be true or false, case-insensitively. A blank or absent result is false. Use an explicit Boolean comparison for numeric, textual, or node values.",
+          "Expressions use XPath 1 in server-1 and XPath 2 in server-2 and server-3."
+        ],
+        "errors": [
+          "A nonblank result other than true or false is an error, rather than an implicit truthy value."
+        ],
+        "example": "examples/server/if.bpa"
+      },
+      {
+        "profiles": ["groovy"],
+        "status": "unavailable",
+        "behavior": "This is an Edit Data command, not a statement in the Groovy language. A script using the Groovy engine uses its Groovy entry point and host APIs.",
+        "constraints": [
+          "Use the Groovy integration profile for lifecycle and host-access rules."
+        ],
+        "errors": []
+      }
+    ]
+  },
+  {
+    "id": "bpa.command.for",
+    "name": "for",
+    "kind": "command",
+    "grammarRule": "iteration",
+    "purpose": "Visits selected values in a statement block.",
+    "operands": ["variable", "expression", "body"],
+    "example": "examples/text/for.bpa",
+    "related": ["bpa.model.control-flow", "bpa.model.data"],
+    "exampleRole": "usage",
+    "exampleProfiles": ["bpa-1"],
+    "variants": [
+      {
+        "profiles": ["bpa-1", "bpa-legacy"],
+        "status": "limited",
+        "behavior": "Visits selected nodes, exposing each node through the loop variable. The body begins after the expanded loop instruction. Completing a loop that has iterated clears its variable; this does not establish that an empty selection clears a prior value. A result needed afterward belongs in a separate variable.",
+        "constraints": [
+          "An empty selection executes the body zero times. The loop variable is available in the body and is cleared after an iterated loop finishes.",
+          "Quotes inside selection predicates can be removed during conversion, changing their meaning. Dynamic or variable-based selection requires the intended XML context. A jump out retains iteration state."
+        ],
+        "errors": []
+      },
+      {
+        "profiles": ["server-1", "server-2", "server-3"],
+        "status": "supported",
+        "behavior": "Iterates each member of a collection, or once for a scalar result. Each iteration assigns the loop variable and executes the body. A null or empty result executes no iterations. Normal completion leaves the last assigned loop value in local storage; an empty loop does not assign a new value.",
+        "constraints": [
+          "Selection uses the current engine expression rules. Use the direct quoted selection expression; the evaluate(...) marker does not add a second server evaluation of the selected result.",
+          "Predicate quotes are retained on the server execution path. A jump out propagates the requested transfer instead of finishing the remaining iterations.",
+          "A loop variable should have a distinct name from values that must survive unchanged."
+        ],
+        "errors": [],
+        "example": "examples/server/for.bpa"
+      },
+      {
+        "profiles": ["groovy"],
+        "status": "unavailable",
+        "behavior": "This is an Edit Data command, not a statement in the Groovy language. A script using the Groovy engine uses its Groovy entry point and host APIs.",
+        "constraints": [
+          "Use the Groovy integration profile for lifecycle and host-access rules."
+        ],
+        "errors": []
+      }
+    ]
+  },
+  {
+    "id": "bpa.command.goto",
+    "name": "goto",
+    "kind": "command",
+    "grammarRule": "jump",
+    "purpose": "Continues at a labeled statement.",
+    "operands": ["label"],
+    "example": "examples/text/goto.bpa",
+    "related": ["bpa.model.control-flow", "bpa.model.data"],
+    "exampleRole": "usage",
+    "exampleProfiles": ["bpa-1"],
+    "variants": [
+      {
+        "profiles": ["bpa-1", "bpa-legacy"],
+        "status": "supported",
+        "behavior": "The following statement is skipped unless reached by another path.",
+        "constraints": [
+          "The target must resolve across the whole script, including structured sequences and emitting Edit Data statements. A prefix on a non-emitting textual label or nested edit block is not a usable execution target."
+        ],
+        "errors": [
+          "A target without a corresponding emitted instruction cannot be resolved. A prefix on textual label or nested edit does not create such an instruction."
+        ]
+      },
+      {
+        "profiles": ["server-1", "server-2", "server-3"],
+        "status": "supported",
+        "behavior": "Transfers execution to a visible line-label prefix. A prefix on a textual label statement is a valid server destination; the label statement itself then continues normally.",
+        "constraints": [
+          "Labels are resolved in the current statement block and its enclosing blocks, including enclosing step sequences. A jump cannot enter an inaccessible nested or sibling block, or the internal labels of another Edit Data step.",
+          "A duplicate label within one block is invalid.",
+          "Script-wide save validation can accept a reference that is out of scope at execution. Passing save validation does not establish an executable jump target."
+        ],
+        "errors": ["An unknown or out-of-scope destination fails."],
+        "example": "examples/server/goto.bpa"
+      },
+      {
+        "profiles": ["groovy"],
+        "status": "unavailable",
+        "behavior": "This is an Edit Data command, not a statement in the Groovy language. A script using the Groovy engine uses its Groovy entry point and host APIs.",
+        "constraints": [
+          "Use the Groovy integration profile for lifecycle and host-access rules."
+        ],
+        "errors": []
+      }
+    ]
+  },
+  {
+    "id": "bpa.command.branch",
+    "name": "branch",
+    "kind": "command",
+    "grammarRule": "branch",
+    "purpose": "Transfers to a label according to a condition, with profile-specific execution rules.",
+    "operands": ["condition", "true-label", "optional false-label"],
+    "example": "examples/restrictions/branch.bpa",
+    "related": ["bpa.model.control-flow", "bpa.model.data"],
+    "exampleRole": "caution",
+    "exampleProfiles": ["bpa-1"],
+    "variants": [
+      {
+        "profiles": ["bpa-1", "bpa-legacy"],
+        "status": "unsafe",
+        "behavior": "The converted instruction does not retain the written condition, so this textual form does not provide reliable conditional transfer in this profile.",
+        "constraints": [
+          "The condition is discarded during conversion. Omitting the false target causes conversion to fail. Use if with goto for conditional transfer."
+        ],
+        "errors": [
+          "Omitting the false target prevents conversion of this form."
+        ]
+      },
+      {
+        "profiles": ["server-1", "server-2", "server-3"],
+        "status": "supported",
+        "behavior": "Evaluates the condition and jumps to the true target when true. When false, it jumps to the optional false target or continues with the next statement if that target is omitted.",
+        "constraints": [
+          "The condition follows the server if rules: true/false case-insensitively, with blank or absent treated as false.",
+          "Targets obey block and enclosing-block label visibility."
+        ],
+        "errors": [
+          "A non-Boolean condition result or unresolved target fails."
+        ],
+        "example": "examples/server/branch.bpa"
+      },
+      {
+        "profiles": ["groovy"],
+        "status": "unavailable",
+        "behavior": "This is an Edit Data command, not a statement in the Groovy language. A script using the Groovy engine uses its Groovy entry point and host APIs.",
+        "constraints": [
+          "Use the Groovy integration profile for lifecycle and host-access rules."
+        ],
+        "errors": []
+      }
+    ]
+  },
+  {
+    "id": "bpa.command.performScript",
+    "name": "performScript",
+    "kind": "command",
+    "grammarRule": "call",
+    "purpose": "Invokes a script and retains the caller continuation.",
+    "operands": ["target"],
+    "example": "examples/text/performScript.bpa",
+    "related": ["bpa.model.control-flow", "bpa.model.data"],
+    "exampleRole": "usage",
+    "exampleProfiles": ["bpa-1"],
+    "variants": [
+      {
+        "profiles": ["bpa-1", "bpa-legacy"],
+        "status": "limited",
+        "behavior": "Shares temporary variables and data areas with the called script. Normal completion resumes the caller; termination or transfer inside the callee may prevent return. Changes made by the callee affect the shared state.",
+        "constraints": [
+          "A target is a literal name, temporary variable, or expression. Availability requires external context.",
+          "Quotes inside dynamic target expressions can be removed during conversion and change the expression. Target availability and external effects require host context."
+        ],
+        "errors": []
+      },
+      {
+        "profiles": ["server-1", "server-2", "server-3"],
+        "status": "unavailable",
+        "behavior": "performScript requires the browser BPA host. Recognizing its syntax does not make it a server interaction or invocation operation.",
+        "constraints": [
+          "Use invokeSS for a server service-script call. Browser navigation and interactive maps require a BPA script."
+        ],
+        "errors": []
+      },
+      {
+        "profiles": ["groovy"],
+        "status": "unavailable",
+        "behavior": "This is an Edit Data command, not a statement in the Groovy language. A script using the Groovy engine uses its Groovy entry point and host APIs.",
+        "constraints": [
+          "Use the Groovy integration profile for lifecycle and host-access rules."
+        ],
+        "errors": []
+      }
+    ]
+  },
+  {
+    "id": "bpa.command.transferControl",
+    "name": "transferControl",
+    "kind": "command",
+    "grammarRule": "call",
+    "purpose": "Transfers execution to another script.",
+    "operands": ["target"],
+    "example": "examples/text/transferControl.bpa",
+    "related": ["bpa.model.control-flow", "bpa.model.data"],
+    "exampleRole": "usage",
+    "exampleProfiles": ["bpa-1"],
+    "variants": [
+      {
+        "profiles": ["bpa-1", "bpa-legacy"],
+        "status": "limited",
+        "behavior": "Abandons the current call stack and data areas while retaining temporary variables. Sequential caller statements do not resume.",
+        "constraints": [
+          "The target may be literal or dynamically resolved.",
+          "Quotes inside dynamic target expressions can be removed during conversion and change the expression. Target availability and external effects require host context."
+        ],
+        "errors": []
+      },
+      {
+        "profiles": ["server-1", "server-2", "server-3"],
+        "status": "unavailable",
+        "behavior": "transferControl requires the browser BPA host. Recognizing its syntax does not make it a server interaction or invocation operation.",
+        "constraints": [
+          "Use invokeSS for a server service-script call. Browser navigation and interactive maps require a BPA script."
+        ],
+        "errors": []
+      },
+      {
+        "profiles": ["groovy"],
+        "status": "unavailable",
+        "behavior": "This is an Edit Data command, not a statement in the Groovy language. A script using the Groovy engine uses its Groovy entry point and host APIs.",
+        "constraints": [
+          "Use the Groovy integration profile for lifecycle and host-access rules."
+        ],
+        "errors": []
+      }
+    ]
+  },
+  {
+    "id": "bpa.command.navigate",
+    "name": "navigate",
+    "kind": "command",
+    "grammarRule": "call",
+    "purpose": "Requests navigation to a named destination.",
+    "operands": ["target"],
+    "example": "examples/text/navigate.bpa",
+    "related": ["bpa.model.control-flow", "bpa.model.data"],
+    "exampleRole": "usage",
+    "exampleProfiles": ["bpa-1"],
+    "variants": [
+      {
+        "profiles": ["bpa-1", "bpa-legacy"],
+        "status": "limited",
+        "behavior": "Changes the displayed location. Host interaction controls when execution resumes.",
+        "constraints": [
+          "Target resolution and navigation permissions belong to the host.",
+          "Quotes inside dynamic target expressions can be removed during conversion and change the expression. Target availability and external effects require host context."
+        ],
+        "errors": []
+      },
+      {
+        "profiles": ["server-1", "server-2", "server-3"],
+        "status": "unavailable",
+        "behavior": "navigate requires the browser BPA host. Recognizing its syntax does not make it a server interaction or invocation operation.",
+        "constraints": [
+          "Use invokeSS for a server service-script call. Browser navigation and interactive maps require a BPA script."
+        ],
+        "errors": []
+      },
+      {
+        "profiles": ["groovy"],
+        "status": "unavailable",
+        "behavior": "This is an Edit Data command, not a statement in the Groovy language. A script using the Groovy engine uses its Groovy entry point and host APIs.",
+        "constraints": [
+          "Use the Groovy integration profile for lifecycle and host-access rules."
+        ],
+        "errors": []
+      }
+    ]
+  },
+  {
+    "id": "bpa.command.navigateAndReloadDashboard",
+    "name": "navigateAndReloadDashboard",
+    "kind": "command",
+    "grammarRule": "call",
+    "purpose": "Navigates and requests a dashboard refresh.",
+    "operands": ["target"],
+    "example": "examples/text/navigateAndReloadDashboard.bpa",
+    "related": ["bpa.model.control-flow", "bpa.model.data"],
+    "exampleRole": "usage",
+    "exampleProfiles": ["bpa-1"],
+    "variants": [
+      {
+        "profiles": ["bpa-1", "bpa-legacy"],
+        "status": "limited",
+        "behavior": "Performs navigation with an additional dashboard refresh request.",
+        "constraints": [
+          "The target is resolved in the host navigation registry.",
+          "Quotes inside dynamic target expressions can be removed during conversion and change the expression. Target availability and external effects require host context."
+        ],
+        "errors": []
+      },
+      {
+        "profiles": ["server-1", "server-2", "server-3"],
+        "status": "unavailable",
+        "behavior": "navigateAndReloadDashboard requires the browser BPA host. Recognizing its syntax does not make it a server interaction or invocation operation.",
+        "constraints": [
+          "Use invokeSS for a server service-script call. Browser navigation and interactive maps require a BPA script."
+        ],
+        "errors": []
+      },
+      {
+        "profiles": ["groovy"],
+        "status": "unavailable",
+        "behavior": "This is an Edit Data command, not a statement in the Groovy language. A script using the Groovy engine uses its Groovy entry point and host APIs.",
+        "constraints": [
+          "Use the Groovy integration profile for lifecycle and host-access rules."
+        ],
+        "errors": []
+      }
+    ]
+  },
+  {
+    "id": "bpa.command.default",
+    "name": "default",
+    "kind": "command",
+    "grammarRule": "defaultValue",
+    "purpose": "Establishes a temporary variable default.",
+    "operands": ["variable", "optional literal value"],
+    "example": "examples/text/default.bpa",
+    "related": ["bpa.model.control-flow", "bpa.model.data"],
+    "exampleRole": "usage",
+    "exampleProfiles": ["bpa-1"],
+    "variants": [
+      {
+        "profiles": ["bpa-1", "bpa-legacy"],
+        "status": "supported",
+        "behavior": "Supplies a default without treating it as unconditional replacement of an existing value.",
+        "constraints": ["Use as followed by a literal when supplying a value."],
+        "errors": []
+      },
+      {
+        "profiles": ["server-1", "server-2", "server-3"],
+        "status": "supported",
+        "behavior": "Keeps a non-null local-variable value. Otherwise assigns the single-quoted default text, or an empty string when the as clause is absent.",
+        "constraints": [
+          "An existing empty string is still a value and is retained.",
+          "The default is literal text, not an evaluated expression. Removing its outer quotes does not interpret escape sequences."
+        ],
+        "errors": [],
+        "example": "examples/text/default.bpa"
+      },
+      {
+        "profiles": ["groovy"],
+        "status": "unavailable",
+        "behavior": "This is an Edit Data command, not a statement in the Groovy language. A script using the Groovy engine uses its Groovy entry point and host APIs.",
+        "constraints": [
+          "Use the Groovy integration profile for lifecycle and host-access rules."
+        ],
+        "errors": []
+      }
+    ]
+  },
+  {
+    "id": "bpa.command.label",
+    "name": "label",
+    "kind": "command",
+    "grammarRule": "labelStatement",
+    "purpose": "Adds descriptive text and, where supported, a labeled execution point.",
+    "operands": ["optional text"],
+    "example": "examples/restrictions/label.bpa",
+    "related": ["bpa.model.control-flow", "bpa.model.data"],
+    "exampleRole": "caution",
+    "exampleProfiles": ["bpa-1"],
+    "variants": [
+      {
+        "profiles": ["bpa-1", "bpa-legacy"],
+        "status": "no-step",
+        "behavior": "Edit Data expansion emits no instruction for this form. A line-label prefix attached to it therefore does not create a browser jump destination.",
+        "constraints": [
+          "Optional text can be quoted or an allowed keyword. A bare arbitrary identifier is not a label operand. This textual form differs from an authorable structured label step."
+        ],
+        "errors": []
+      },
+      {
+        "profiles": ["server-1", "server-2", "server-3"],
+        "status": "supported",
+        "behavior": "Provides descriptive text and performs no data operation. A line-label prefix on the statement creates a server jump target.",
+        "constraints": [
+          "The optional text is a description. A goto names the prefix before the colon, not the descriptive text."
+        ],
+        "errors": [],
+        "example": "examples/server/label.bpa"
+      },
+      {
+        "profiles": ["groovy"],
+        "status": "unavailable",
+        "behavior": "This is an Edit Data command, not a statement in the Groovy language. A script using the Groovy engine uses its Groovy entry point and host APIs.",
+        "constraints": [
+          "Use the Groovy integration profile for lifecycle and host-access rules."
+        ],
+        "errors": []
+      }
+    ]
+  },
+  {
+    "id": "bpa.command.edit",
+    "name": "edit",
+    "kind": "command",
+    "grammarRule": "editBlock",
+    "purpose": "Groups statements in an Edit Data block.",
+    "operands": ["body"],
+    "example": "examples/restrictions/edit.bpa",
+    "related": ["bpa.model.control-flow", "bpa.model.data"],
+    "exampleRole": "caution",
+    "exampleProfiles": ["bpa-1"],
+    "variants": [
+      {
+        "profiles": ["bpa-1", "bpa-legacy"],
+        "status": "no-step",
+        "behavior": "The nested block produces no browser instructions. Submit its statements directly as Edit Data content instead.",
+        "constraints": [
+          "The host provides the outer Edit Data wrapper. A nested edit data block is shared syntax, but its body is not expanded on the BPA path."
+        ],
+        "errors": []
+      },
+      {
+        "profiles": ["server-1", "server-2", "server-3"],
+        "status": "supported",
+        "behavior": "Executes the contained statement block, then resumes the enclosing sequence unless a nested command jumps or terminates.",
+        "constraints": [
+          "An edit data ... end-edit wrapper is a block in server text. A host may already provide the wrapper around a saved Edit Data body; do not duplicate it when entering only that body."
+        ],
+        "errors": [],
+        "example": "examples/server/edit.bpa"
+      },
+      {
+        "profiles": ["groovy"],
+        "status": "unavailable",
+        "behavior": "This is an Edit Data command, not a statement in the Groovy language. A script using the Groovy engine uses its Groovy entry point and host APIs.",
+        "constraints": [
+          "Use the Groovy integration profile for lifecycle and host-access rules."
+        ],
+        "errors": []
+      }
+    ]
+  },
+  {
+    "id": "bpa.command.terminate",
+    "name": "terminate",
+    "kind": "command",
+    "grammarRule": "termination",
+    "purpose": "Stops the whole BPA, including any active callers.",
+    "operands": ["optional error or map result"],
+    "example": "examples/text/terminate.bpa",
+    "related": ["bpa.model.control-flow", "bpa.model.data"],
+    "exampleRole": "usage",
+    "exampleProfiles": ["bpa-1"],
+    "variants": [
+      {
+        "profiles": ["bpa-1", "bpa-legacy"],
+        "status": "limited",
+        "behavior": "Stops the whole BPA from any call depth. Textual error and map forms retain only the stopping operation after conversion.",
+        "constraints": [
+          "Use plain terminate for BPA. Error and map payloads are discarded during conversion and do not display an error or produce a map result.",
+          "Substitution indexes in shared error syntax start at one; index zero is not a valid slot."
+        ],
+        "errors": [
+          "Substitution index zero is invalid during action construction."
+        ]
+      },
+      {
+        "profiles": ["server-1", "server-2", "server-3"],
+        "status": "supported",
+        "behavior": "Plain terminate completes the current server script normally. The with error form raises the specified host message, evaluates its substitutions, and optionally identifies an error element. The with map form raises a host completion signal containing the map and using operands; its caller must support that signal to present a map.",
+        "constraints": [
+          "A service-script caller can continue after normal return. An error propagates through server invocation unless a surrounding host boundary handles it.",
+          "Message identifiers and referenced schemas must exist in the host. The with map form is an integration boundary, not direct server-side browser rendering.",
+          "Do not apply the browser rule that discards textual error or map operands to server execution."
+        ],
+        "errors": [
+          "An invalid message, substitution, or error-element reference can fail. A caller without map-completion support cannot fulfill terminate with map."
+        ],
+        "example": "examples/server/terminate.bpa"
+      },
+      {
+        "profiles": ["groovy"],
+        "status": "unavailable",
+        "behavior": "This is an Edit Data command, not a statement in the Groovy language. A script using the Groovy engine uses its Groovy entry point and host APIs.",
+        "constraints": [
+          "Use the Groovy integration profile for lifecycle and host-access rules."
+        ],
+        "errors": []
+      }
+    ]
+  },
+  {
+    "id": "bpa.command.declareBO",
+    "name": "declareBO",
+    "kind": "command",
+    "grammarRule": "declaration",
+    "purpose": "Declares a local data-area alias for a business object.",
+    "operands": ["target", "alias"],
+    "example": "examples/text/declareBO.bpa",
+    "related": ["bpa.model.control-flow", "bpa.model.data"],
+    "exampleRole": "usage",
+    "exampleProfiles": ["bpa-1"],
+    "variants": [
+      {
+        "profiles": ["bpa-1", "bpa-legacy"],
+        "status": "supported",
+        "behavior": "Introduces an alias for the business object schema. The schema itself is resolved by the host. Declaring an existing alias replaces its current data; the host supplies schema details and defaults.",
+        "constraints": [
+          "The target is resolved by the host. The alias is a literal XML-compatible simple name, including a possible leading underscore."
+        ],
+        "errors": []
+      },
+      {
+        "profiles": ["server-1", "server-2", "server-3"],
+        "status": "supported",
+        "behavior": "Resolves the business-object schema and creates a named data area. Reusing an alias replaces that area's current contents. The host supplies schema structure and default values.",
+        "constraints": [
+          "The schema name can be a literal, a local variable, or an expression resolving to a name. The alias is a single-quoted name.",
+          "A schema declaration does not itself invoke an operation or retrieve business records."
+        ],
+        "errors": ["A missing schema or unresolved dynamic name fails."]
+      },
+      {
+        "profiles": ["groovy"],
+        "status": "unavailable",
+        "behavior": "This is an Edit Data command, not a statement in the Groovy language. A script using the Groovy engine uses its Groovy entry point and host APIs.",
+        "constraints": [
+          "Use the Groovy integration profile for lifecycle and host-access rules."
+        ],
+        "errors": []
+      }
+    ]
+  },
+  {
+    "id": "bpa.command.declareBOWithBOGroup",
+    "name": "declareBOWithBOGroup",
+    "kind": "command",
+    "grammarRule": "declaration",
+    "purpose": "Declares a local data-area alias for a business object with a grouped representation.",
+    "operands": ["target", "alias"],
+    "example": "examples/text/declareBOWithBOGroup.bpa",
+    "related": ["bpa.model.control-flow", "bpa.model.data"],
+    "exampleRole": "usage",
+    "exampleProfiles": ["bpa-1"],
+    "variants": [
+      {
+        "profiles": ["bpa-1", "bpa-legacy"],
+        "status": "supported",
+        "behavior": "Introduces an alias for the business object with a grouped representation schema. The schema itself is resolved by the host. Declaring an existing alias replaces its current data; the host supplies schema details and defaults.",
+        "constraints": [
+          "The target is resolved by the host. The alias is a literal XML-compatible simple name, including a possible leading underscore."
+        ],
+        "errors": []
+      },
+      {
+        "profiles": ["server-1", "server-2", "server-3"],
+        "status": "supported",
+        "behavior": "Resolves the business-object schema and creates a named data area. Reusing an alias replaces that area's current contents. The host supplies schema structure and default values. On the server this form resolves the ordinary business-object schema; it does not request the extra browser grouping representation.",
+        "constraints": [
+          "The schema name can be a literal, a local variable, or an expression resolving to a name. The alias is a single-quoted name.",
+          "A schema declaration does not itself invoke an operation or retrieve business records."
+        ],
+        "errors": ["A missing schema or unresolved dynamic name fails."]
+      },
+      {
+        "profiles": ["groovy"],
+        "status": "unavailable",
+        "behavior": "This is an Edit Data command, not a statement in the Groovy language. A script using the Groovy engine uses its Groovy entry point and host APIs.",
+        "constraints": [
+          "Use the Groovy integration profile for lifecycle and host-access rules."
+        ],
+        "errors": []
+      }
+    ]
+  },
+  {
+    "id": "bpa.command.declareBS",
+    "name": "declareBS",
+    "kind": "command",
+    "grammarRule": "declaration",
+    "purpose": "Declares a local data-area alias for a business service.",
+    "operands": ["target", "alias"],
+    "example": "examples/text/declareBS.bpa",
+    "related": ["bpa.model.control-flow", "bpa.model.data"],
+    "exampleRole": "usage",
+    "exampleProfiles": ["bpa-1"],
+    "variants": [
+      {
+        "profiles": ["bpa-1", "bpa-legacy"],
+        "status": "supported",
+        "behavior": "Introduces an alias for the business service schema. The schema itself is resolved by the host. Declaring an existing alias replaces its current data; the host supplies schema details and defaults.",
+        "constraints": [
+          "The target is resolved by the host. The alias is a literal XML-compatible simple name, including a possible leading underscore."
+        ],
+        "errors": []
+      },
+      {
+        "profiles": ["server-1", "server-2", "server-3"],
+        "status": "supported",
+        "behavior": "Resolves the business-service schema and creates a named data area. Reusing an alias replaces that area's current contents. The host supplies schema structure and default values.",
+        "constraints": [
+          "The schema name can be a literal, a local variable, or an expression resolving to a name. The alias is a single-quoted name.",
+          "A schema declaration does not itself invoke an operation or retrieve business records."
+        ],
+        "errors": ["A missing schema or unresolved dynamic name fails."]
+      },
+      {
+        "profiles": ["groovy"],
+        "status": "unavailable",
+        "behavior": "This is an Edit Data command, not a statement in the Groovy language. A script using the Groovy engine uses its Groovy entry point and host APIs.",
+        "constraints": [
+          "Use the Groovy integration profile for lifecycle and host-access rules."
+        ],
+        "errors": []
+      }
+    ]
+  },
+  {
+    "id": "bpa.command.declareSS",
+    "name": "declareSS",
+    "kind": "command",
+    "grammarRule": "declaration",
+    "purpose": "Declares a local data-area alias for a service script.",
+    "operands": ["target", "alias"],
+    "example": "examples/text/declareSS.bpa",
+    "related": ["bpa.model.control-flow", "bpa.model.data"],
+    "exampleRole": "usage",
+    "exampleProfiles": ["bpa-1"],
+    "variants": [
+      {
+        "profiles": ["bpa-1", "bpa-legacy"],
+        "status": "supported",
+        "behavior": "Introduces an alias for the service script schema. The schema itself is resolved by the host. Declaring an existing alias replaces its current data; the host supplies schema details and defaults.",
+        "constraints": [
+          "The target is resolved by the host. The alias is a literal XML-compatible simple name, including a possible leading underscore."
+        ],
+        "errors": []
+      },
+      {
+        "profiles": ["server-1", "server-2", "server-3"],
+        "status": "supported",
+        "behavior": "Resolves the service-script schema and creates a named data area. Reusing an alias replaces that area's current contents. The host supplies schema structure and default values.",
+        "constraints": [
+          "The schema name can be a literal, a local variable, or an expression resolving to a name. The alias is a single-quoted name.",
+          "A schema declaration does not itself invoke an operation or retrieve business records."
+        ],
+        "errors": ["A missing schema or unresolved dynamic name fails."]
+      },
+      {
+        "profiles": ["groovy"],
+        "status": "unavailable",
+        "behavior": "This is an Edit Data command, not a statement in the Groovy language. A script using the Groovy engine uses its Groovy entry point and host APIs.",
+        "constraints": [
+          "Use the Groovy integration profile for lifecycle and host-access rules."
+        ],
+        "errors": []
+      }
+    ]
+  },
+  {
+    "id": "bpa.command.declareDA",
+    "name": "declareDA",
+    "kind": "command",
+    "grammarRule": "declaration",
+    "purpose": "Declares a local data-area alias for a data area.",
+    "operands": ["target", "alias"],
+    "example": "examples/text/declareDA.bpa",
+    "related": ["bpa.model.control-flow", "bpa.model.data"],
+    "exampleRole": "usage",
+    "exampleProfiles": ["bpa-1"],
+    "variants": [
+      {
+        "profiles": ["bpa-1", "bpa-legacy"],
+        "status": "supported",
+        "behavior": "Introduces an alias for the data area schema. The schema itself is resolved by the host. Declaring an existing alias replaces its current data; the host supplies schema details and defaults.",
+        "constraints": [
+          "The target is resolved by the host. The alias is a literal XML-compatible simple name, including a possible leading underscore."
+        ],
+        "errors": []
+      },
+      {
+        "profiles": ["server-1", "server-2", "server-3"],
+        "status": "supported",
+        "behavior": "Resolves the data-area schema and creates a named data area. Reusing an alias replaces that area's current contents. The host supplies schema structure and default values.",
+        "constraints": [
+          "The schema name can be a literal, a local variable, or an expression resolving to a name. The alias is a single-quoted name.",
+          "A schema declaration does not itself invoke an operation or retrieve business records."
+        ],
+        "errors": ["A missing schema or unresolved dynamic name fails."]
+      },
+      {
+        "profiles": ["groovy"],
+        "status": "unavailable",
+        "behavior": "This is an Edit Data command, not a statement in the Groovy language. A script using the Groovy engine uses its Groovy entry point and host APIs.",
+        "constraints": [
+          "Use the Groovy integration profile for lifecycle and host-access rules."
+        ],
+        "errors": []
+      }
+    ]
+  },
+  {
+    "id": "bpa.command.declareMap",
+    "name": "declareMap",
+    "kind": "command",
+    "grammarRule": "declaration",
+    "purpose": "Declares a local data-area alias for a map.",
+    "operands": ["target", "alias"],
+    "example": "examples/text/declareMap.bpa",
+    "related": ["bpa.model.control-flow", "bpa.model.data"],
+    "exampleRole": "usage",
+    "exampleProfiles": ["bpa-1"],
+    "variants": [
+      {
+        "profiles": ["bpa-1", "bpa-legacy"],
+        "status": "supported",
+        "behavior": "Introduces an alias for the map schema. The schema itself is resolved by the host. Declaring an existing alias replaces its current data; the host supplies schema details and defaults.",
+        "constraints": [
+          "The target is resolved by the host. The alias is a literal XML-compatible simple name, including a possible leading underscore."
+        ],
+        "errors": []
+      },
+      {
+        "profiles": ["server-1", "server-2", "server-3"],
+        "status": "supported",
+        "behavior": "Resolves the map schema and creates a named data area. Reusing an alias replaces that area's current contents. The host supplies schema structure and default values.",
+        "constraints": [
+          "The schema name can be a literal, a local variable, or an expression resolving to a name. The alias is a single-quoted name.",
+          "A schema declaration does not itself invoke an operation or retrieve business records."
+        ],
+        "errors": ["A missing schema or unresolved dynamic name fails."]
+      },
+      {
+        "profiles": ["groovy"],
+        "status": "unavailable",
+        "behavior": "This is an Edit Data command, not a statement in the Groovy language. A script using the Groovy engine uses its Groovy entry point and host APIs.",
+        "constraints": [
+          "Use the Groovy integration profile for lifecycle and host-access rules."
+        ],
+        "errors": []
+      }
+    ]
+  },
+  {
+    "id": "bpa.command.invokeBO",
+    "name": "invokeBO",
+    "kind": "command",
+    "grammarRule": "invocation",
+    "purpose": "Invokes a business object using a data area.",
+    "operands": ["target", "data area", "action"],
+    "example": "examples/text/invokeBO.bpa",
+    "related": ["bpa.model.control-flow", "bpa.model.data"],
+    "exampleRole": "usage",
+    "exampleProfiles": ["bpa-1"],
+    "variants": [
+      {
+        "profiles": ["bpa-1", "bpa-legacy"],
+        "status": "limited",
+        "behavior": "Passes data to the business object and receives resulting changes. Host operations may have side effects. Edit Data continues at the next statement after success or a handled failure and updates the system error/message variables. Check $ERROR explicitly where success is required.",
+        "constraints": [
+          "The using operand identifies a data area. Quotes inside a data-area expression can be removed during expansion, changing the expression.",
+          "Without a warning clause or with suppress, warnings are ignored. with warn alone and asError treat warnings as errors; popup requests confirmation."
+        ],
+        "errors": []
+      },
+      {
+        "profiles": ["server-1", "server-2", "server-3"],
+        "status": "supported",
+        "behavior": "Resolves and invokes the business object with the using data group. Successful invocation continues at the next statement and makes returned changes available in that group. Server exceptions propagate; the browser's $ERROR-and-continue behavior is not the server error contract.",
+        "constraints": [
+          "The using path must identify exactly one element. Name and operation availability, security, transaction behavior, and any side effects are determined by the host.",
+          "Supply an operation such as read, add, update, or delete. Fast operations and readWithoutVersion retain their host-defined semantics.",
+          "Warning syntax can be present, but it does not create browser popup behavior or a catch block on the server."
+        ],
+        "errors": [
+          "An unavailable name, invalid group, authorization failure, operation error, or called-script error fails the invocation."
+        ],
+        "example": "examples/server/invokeBO.bpa"
+      },
+      {
+        "profiles": ["groovy"],
+        "status": "unavailable",
+        "behavior": "This is an Edit Data command, not a statement in the Groovy language. A script using the Groovy engine uses its Groovy entry point and host APIs.",
+        "constraints": [
+          "Use the Groovy integration profile for lifecycle and host-access rules."
+        ],
+        "errors": []
+      }
+    ]
+  },
+  {
+    "id": "bpa.command.invokeBS",
+    "name": "invokeBS",
+    "kind": "command",
+    "grammarRule": "invocation",
+    "purpose": "Invokes a business service using a data area.",
+    "operands": ["target", "data area"],
+    "example": "examples/text/invokeBS.bpa",
+    "related": ["bpa.model.control-flow", "bpa.model.data"],
+    "exampleRole": "usage",
+    "exampleProfiles": ["bpa-1"],
+    "variants": [
+      {
+        "profiles": ["bpa-1", "bpa-legacy"],
+        "status": "limited",
+        "behavior": "Passes data to the business service and receives resulting changes. Host operations may have side effects. Edit Data continues at the next statement after success or a handled failure and updates the system error/message variables. Check $ERROR explicitly where success is required.",
+        "constraints": [
+          "The using operand identifies a data area. Quotes inside a data-area expression can be removed during expansion, changing the expression.",
+          "Without a warning clause or with suppress, warnings are ignored. with warn alone and asError treat warnings as errors; popup requests confirmation."
+        ],
+        "errors": []
+      },
+      {
+        "profiles": ["server-1", "server-2", "server-3"],
+        "status": "supported",
+        "behavior": "Resolves and invokes the business service with the using data group. Successful invocation continues at the next statement and makes returned changes available in that group. Server exceptions propagate; the browser's $ERROR-and-continue behavior is not the server error contract.",
+        "constraints": [
+          "The using path must identify exactly one element. Name and operation availability, security, transaction behavior, and any side effects are determined by the host.",
+          "Warning syntax can be present, but it does not create browser popup behavior or a catch block on the server."
+        ],
+        "errors": [
+          "An unavailable name, invalid group, authorization failure, operation error, or called-script error fails the invocation."
+        ],
+        "example": "examples/server/invokeBS.bpa"
+      },
+      {
+        "profiles": ["groovy"],
+        "status": "unavailable",
+        "behavior": "This is an Edit Data command, not a statement in the Groovy language. A script using the Groovy engine uses its Groovy entry point and host APIs.",
+        "constraints": [
+          "Use the Groovy integration profile for lifecycle and host-access rules."
+        ],
+        "errors": []
+      }
+    ]
+  },
+  {
+    "id": "bpa.command.invokeSS",
+    "name": "invokeSS",
+    "kind": "command",
+    "grammarRule": "invocation",
+    "purpose": "Invokes a service script using a data area.",
+    "operands": ["target", "data area"],
+    "example": "examples/text/invokeSS.bpa",
+    "related": ["bpa.model.control-flow", "bpa.model.data"],
+    "exampleRole": "usage",
+    "exampleProfiles": ["bpa-1"],
+    "variants": [
+      {
+        "profiles": ["bpa-1", "bpa-legacy"],
+        "status": "limited",
+        "behavior": "Passes data to the service script and receives resulting changes. Host operations may have side effects. Edit Data continues at the next statement after success or a handled failure and updates the system error/message variables. Check $ERROR explicitly where success is required.",
+        "constraints": [
+          "The using operand identifies a data area. Quotes inside a data-area expression can be removed during expansion, changing the expression.",
+          "Without a warning clause or with suppress, warnings are ignored. with warn alone and asError treat warnings as errors; popup requests confirmation."
+        ],
+        "errors": []
+      },
+      {
+        "profiles": ["server-1", "server-2", "server-3"],
+        "status": "supported",
+        "behavior": "Resolves and invokes the service script with the using data group. Successful invocation continues at the next statement and makes returned changes available in that group. Server exceptions propagate; the browser's $ERROR-and-continue behavior is not the server error contract.",
+        "constraints": [
+          "The using path must identify exactly one element. Name and operation availability, security, transaction behavior, and any side effects are determined by the host.",
+          "Warning syntax can be present, but it does not create browser popup behavior or a catch block on the server."
+        ],
+        "errors": [
+          "An unavailable name, invalid group, authorization failure, operation error, or called-script error fails the invocation."
+        ],
+        "example": "examples/server/invokeSS.bpa"
+      },
+      {
+        "profiles": ["groovy"],
+        "status": "unavailable",
+        "behavior": "This is an Edit Data command, not a statement in the Groovy language. A script using the Groovy engine uses its Groovy entry point and host APIs.",
+        "constraints": [
+          "Use the Groovy integration profile for lifecycle and host-access rules."
+        ],
+        "errors": []
+      }
+    ]
+  },
+  {
+    "id": "bpa.command.invokeMap",
+    "name": "invokeMap",
+    "kind": "command",
+    "grammarRule": "mapOperation",
+    "purpose": "Opens a map.",
+    "operands": ["target", "optional data area", "optional display target"],
+    "example": "examples/text/invokeMap.bpa",
+    "related": ["bpa.model.control-flow", "bpa.model.data"],
+    "exampleRole": "usage",
+    "exampleProfiles": ["bpa-1"],
+    "variants": [
+      {
+        "profiles": ["bpa-1", "bpa-legacy"],
+        "status": "limited",
+        "behavior": "Displays an interactive map; the host controls rendering, input rules, and completion.",
+        "constraints": [
+          "Display target is bpa, page, or popup. The host supplies interaction behavior and returned values.",
+          "The default display is popup. Quote-containing data-area and dynamic-target expressions may change during expansion."
+        ],
+        "errors": []
+      },
+      {
+        "profiles": ["server-1", "server-2", "server-3"],
+        "status": "unavailable",
+        "behavior": "invokeMap requires the browser BPA host. Recognizing its syntax does not make it a server interaction or invocation operation.",
+        "constraints": [
+          "Use invokeSS for a server service-script call. Browser navigation and interactive maps require a BPA script."
+        ],
+        "errors": []
+      },
+      {
+        "profiles": ["groovy"],
+        "status": "unavailable",
+        "behavior": "This is an Edit Data command, not a statement in the Groovy language. A script using the Groovy engine uses its Groovy entry point and host APIs.",
+        "constraints": [
+          "Use the Groovy integration profile for lifecycle and host-access rules."
+        ],
+        "errors": []
+      }
+    ]
+  },
+  {
+    "id": "bpa.command.generateBOEditMap",
+    "name": "generateBOEditMap",
+    "kind": "command",
+    "grammarRule": "mapOperation",
+    "purpose": "Generates an edit map from a business object schema.",
+    "operands": ["target", "optional data area", "optional display target"],
+    "example": "examples/text/generateBOEditMap.bpa",
+    "related": ["bpa.model.control-flow", "bpa.model.data"],
+    "exampleRole": "usage",
+    "exampleProfiles": ["bpa-1"],
+    "variants": [
+      {
+        "profiles": ["bpa-1", "bpa-legacy"],
+        "status": "limited",
+        "behavior": "Displays an interactive map; the host controls rendering, input rules, and completion.",
+        "constraints": [
+          "Display target is bpa, page, or popup. The host supplies interaction behavior and returned values.",
+          "The default display is page. Quote-containing data-area and dynamic-target expressions may change during expansion."
+        ],
+        "errors": []
+      },
+      {
+        "profiles": ["server-1", "server-2", "server-3"],
+        "status": "unavailable",
+        "behavior": "generateBOEditMap requires the browser BPA host. Recognizing its syntax does not make it a server interaction or invocation operation.",
+        "constraints": [
+          "Use invokeSS for a server service-script call. Browser navigation and interactive maps require a BPA script."
+        ],
+        "errors": []
+      },
+      {
+        "profiles": ["groovy"],
+        "status": "unavailable",
+        "behavior": "This is an Edit Data command, not a statement in the Groovy language. A script using the Groovy engine uses its Groovy entry point and host APIs.",
+        "constraints": [
+          "Use the Groovy integration profile for lifecycle and host-access rules."
+        ],
+        "errors": []
+      }
+    ]
+  },
+  {
+    "id": "bpa.command.generateBSEditMap",
+    "name": "generateBSEditMap",
+    "kind": "command",
+    "grammarRule": "mapOperation",
+    "purpose": "Generates an edit map from a business service schema.",
+    "operands": ["target", "optional data area", "optional display target"],
+    "example": "examples/text/generateBSEditMap.bpa",
+    "related": ["bpa.model.control-flow", "bpa.model.data"],
+    "exampleRole": "usage",
+    "exampleProfiles": ["bpa-1"],
+    "variants": [
+      {
+        "profiles": ["bpa-1", "bpa-legacy"],
+        "status": "limited",
+        "behavior": "Displays an interactive map; the host controls rendering, input rules, and completion.",
+        "constraints": [
+          "Display target is bpa, page, or popup. The host supplies interaction behavior and returned values.",
+          "The default display is page. Quote-containing data-area and dynamic-target expressions may change during expansion."
+        ],
+        "errors": []
+      },
+      {
+        "profiles": ["server-1", "server-2", "server-3"],
+        "status": "unavailable",
+        "behavior": "generateBSEditMap requires the browser BPA host. Recognizing its syntax does not make it a server interaction or invocation operation.",
+        "constraints": [
+          "Use invokeSS for a server service-script call. Browser navigation and interactive maps require a BPA script."
+        ],
+        "errors": []
+      },
+      {
+        "profiles": ["groovy"],
+        "status": "unavailable",
+        "behavior": "This is an Edit Data command, not a statement in the Groovy language. A script using the Groovy engine uses its Groovy entry point and host APIs.",
+        "constraints": [
+          "Use the Groovy integration profile for lifecycle and host-access rules."
+        ],
+        "errors": []
+      }
+    ]
+  },
+  {
+    "id": "bpa.command.generateSSEditMap",
+    "name": "generateSSEditMap",
+    "kind": "command",
+    "grammarRule": "mapOperation",
+    "purpose": "Generates an edit map from a service script schema.",
+    "operands": ["target", "optional data area", "optional display target"],
+    "example": "examples/text/generateSSEditMap.bpa",
+    "related": ["bpa.model.control-flow", "bpa.model.data"],
+    "exampleRole": "usage",
+    "exampleProfiles": ["bpa-1"],
+    "variants": [
+      {
+        "profiles": ["bpa-1", "bpa-legacy"],
+        "status": "limited",
+        "behavior": "Displays an interactive map; the host controls rendering, input rules, and completion.",
+        "constraints": [
+          "Display target is bpa, page, or popup. The host supplies interaction behavior and returned values.",
+          "The default display is page. Quote-containing data-area and dynamic-target expressions may change during expansion."
+        ],
+        "errors": []
+      },
+      {
+        "profiles": ["server-1", "server-2", "server-3"],
+        "status": "unavailable",
+        "behavior": "generateSSEditMap requires the browser BPA host. Recognizing its syntax does not make it a server interaction or invocation operation.",
+        "constraints": [
+          "Use invokeSS for a server service-script call. Browser navigation and interactive maps require a BPA script."
+        ],
+        "errors": []
+      },
+      {
+        "profiles": ["groovy"],
+        "status": "unavailable",
+        "behavior": "This is an Edit Data command, not a statement in the Groovy language. A script using the Groovy engine uses its Groovy entry point and host APIs.",
+        "constraints": [
+          "Use the Groovy integration profile for lifecycle and host-access rules."
+        ],
+        "errors": []
+      }
+    ]
+  },
+  {
+    "id": "bpa.command.generateDAEditMap",
+    "name": "generateDAEditMap",
+    "kind": "command",
+    "grammarRule": "mapOperation",
+    "purpose": "Generates an edit map from a data area schema.",
+    "operands": ["target", "optional data area", "optional display target"],
+    "example": "examples/text/generateDAEditMap.bpa",
+    "related": ["bpa.model.control-flow", "bpa.model.data"],
+    "exampleRole": "usage",
+    "exampleProfiles": ["bpa-1"],
+    "variants": [
+      {
+        "profiles": ["bpa-1", "bpa-legacy"],
+        "status": "limited",
+        "behavior": "Displays an interactive map; the host controls rendering, input rules, and completion.",
+        "constraints": [
+          "Display target is bpa, page, or popup. The host supplies interaction behavior and returned values.",
+          "The default display is page. Quote-containing data-area and dynamic-target expressions may change during expansion."
+        ],
+        "errors": []
+      },
+      {
+        "profiles": ["server-1", "server-2", "server-3"],
+        "status": "unavailable",
+        "behavior": "generateDAEditMap requires the browser BPA host. Recognizing its syntax does not make it a server interaction or invocation operation.",
+        "constraints": [
+          "Use invokeSS for a server service-script call. Browser navigation and interactive maps require a BPA script."
+        ],
+        "errors": []
+      },
+      {
+        "profiles": ["groovy"],
+        "status": "unavailable",
+        "behavior": "This is an Edit Data command, not a statement in the Groovy language. A script using the Groovy engine uses its Groovy entry point and host APIs.",
+        "constraints": [
+          "Use the Groovy integration profile for lifecycle and host-access rules."
+        ],
+        "errors": []
+      }
+    ]
+  },
+  {
+    "id": "bpa.command.invokeGroovy",
+    "name": "invokeGroovy",
+    "kind": "command",
+    "grammarRule": "groovyInvocation",
+    "purpose": "Calls a compiled Groovy member from a server XPath script.",
+    "operands": ["method-name"],
+    "example": "examples/server/invokeGroovy.bpa",
+    "exampleProfiles": ["server-1", "server-2", "server-3"],
+    "exampleRole": "usage",
+    "related": ["bpa.model.control-flow", "bpa.model.data"],
+    "variants": [
+      {
+        "profiles": ["bpa-1", "bpa-legacy"],
+        "status": "unavailable",
+        "behavior": "The browser BPA conversion does not provide an invokeGroovy instruction.",
+        "constraints": [
+          "Invoke a service script when browser BPA needs server behavior."
+        ],
+        "errors": []
+      },
+      {
+        "profiles": ["server-1", "server-2", "server-3"],
+        "status": "limited",
+        "behavior": "Invokes a public zero-argument method on the current script's compiled Groovy instance. The host supplies the current data-area root, invocation context, and schema metadata before calling it. A method return value is not assigned by this command; use the shared script context to exchange values.",
+        "constraints": [
+          "The script must supply Groovy members and the host must permit Groovy compilation and execution.",
+          "Use a literal method name, such as invokeGroovy 'prepareResult'. Although variable and expression operands are recognized by the shared syntax, this invocation uses their stored name text rather than evaluating them dynamically.",
+          "A successful call resumes at the next Edit Data statement. This mixed-script integration does not select the pure Groovy engine.",
+          "In supporting host releases, Groovy members may construct restricted expression arguments with concatenateGroovyStrings. Confirm the helper and its argument tracking on the target host; the script engine or Groovy language version alone does not establish availability. The helper result, a local variable declared or assigned from it, or an alias of that variable can supply such an argument; the helper arguments remain subject to host restrictions. This host API is not an Edit Data command."
+        ],
+        "errors": [
+          "A missing compiled instance, missing public zero-argument method, or method exception fails the call."
+        ]
+      },
+      {
+        "profiles": ["groovy"],
+        "status": "unavailable",
+        "behavior": "This is an Edit Data command, not a statement in the Groovy language. A script using the Groovy engine uses its Groovy entry point and host APIs.",
+        "constraints": [
+          "Use the Groovy integration profile for lifecycle and host-access rules."
+        ],
+        "errors": []
+      }
+    ]
+  }
+]

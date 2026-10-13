@@ -1,0 +1,1662 @@
+{
+  "schemaVersion": 2,
+  "profiles": [
+    {
+      "id": "bpa-1",
+      "engineCode": "F110",
+      "scriptTypes": ["bpa"],
+      "execution": "browser",
+      "expressionLanguage": "Browser XPath 1.0",
+      "sourceStepsByScriptType": {
+        "bpa": [
+          {
+            "code": "DISP",
+            "name": "Display text"
+          },
+          {
+            "code": "EDDT",
+            "name": "Edit Data"
+          },
+          {
+            "code": "FCS",
+            "name": "Set focus to a field"
+          },
+          {
+            "code": "FUNC",
+            "name": "Invoke function"
+          },
+          {
+            "code": "GOTO",
+            "name": "Go to a step"
+          },
+          {
+            "code": "HGHT",
+            "name": "Height"
+          },
+          {
+            "code": "IF",
+            "name": "Conditional branch"
+          },
+          {
+            "code": "INBO",
+            "name": "Invoke business object"
+          },
+          {
+            "code": "INBS",
+            "name": "Invoke business service"
+          },
+          {
+            "code": "INMP",
+            "name": "Invoke map"
+          },
+          {
+            "code": "INP",
+            "name": "Input data"
+          },
+          {
+            "code": "INSC",
+            "name": "Invoke service script"
+          },
+          {
+            "code": "LABL",
+            "name": "Label"
+          },
+          {
+            "code": "MATH",
+            "name": "Mathematical operation"
+          },
+          {
+            "code": "MOVE",
+            "name": "Move data"
+          },
+          {
+            "code": "NAV",
+            "name": "Navigate to a page"
+          },
+          {
+            "code": "PRES",
+            "name": "Press a button"
+          },
+          {
+            "code": "PRMT",
+            "name": "Prompt user"
+          },
+          {
+            "code": "PSCR",
+            "name": "Perform script"
+          },
+          {
+            "code": "TERM",
+            "name": "Terminate"
+          },
+          {
+            "code": "XCTL",
+            "name": "Transfer control"
+          }
+        ]
+      },
+      "representations": ["edit-data-body", "normalized-browser-steps"],
+      "grammar": {
+        "kind": "edit-data",
+        "path": "grammar/bpa-1/Bpa1.g4",
+        "name": "Bpa1",
+        "entryPoint": "program",
+        "sharedGrammar": "grammar/EditData.g4",
+        "completeInput": true,
+        "syntaxScope": "The reference supported-operation subset of Edit Data body syntax. Operand validity, conversion effects, and runtime requirements are additional contract rules."
+      },
+      "commandForms": [
+        {
+          "command": "bpa.command.move",
+          "syntaxRule": "assignment",
+          "applicability": "limited",
+          "includedInGrammar": true
+        },
+        {
+          "command": "bpa.command.if",
+          "syntaxRule": "conditional",
+          "applicability": "supported",
+          "includedInGrammar": true
+        },
+        {
+          "command": "bpa.command.for",
+          "syntaxRule": "iteration",
+          "applicability": "limited",
+          "includedInGrammar": true
+        },
+        {
+          "command": "bpa.command.goto",
+          "syntaxRule": "jump",
+          "applicability": "supported",
+          "includedInGrammar": true
+        },
+        {
+          "command": "bpa.command.branch",
+          "syntaxRule": "branch",
+          "applicability": "unsafe",
+          "includedInGrammar": true
+        },
+        {
+          "command": "bpa.command.performScript",
+          "syntaxRule": "call",
+          "applicability": "limited",
+          "includedInGrammar": true
+        },
+        {
+          "command": "bpa.command.transferControl",
+          "syntaxRule": "call",
+          "applicability": "limited",
+          "includedInGrammar": true
+        },
+        {
+          "command": "bpa.command.navigate",
+          "syntaxRule": "call",
+          "applicability": "limited",
+          "includedInGrammar": true
+        },
+        {
+          "command": "bpa.command.navigateAndReloadDashboard",
+          "syntaxRule": "call",
+          "applicability": "limited",
+          "includedInGrammar": true
+        },
+        {
+          "command": "bpa.command.default",
+          "syntaxRule": "defaultValue",
+          "applicability": "supported",
+          "includedInGrammar": true
+        },
+        {
+          "command": "bpa.command.label",
+          "syntaxRule": "labelStatement",
+          "applicability": "no-step",
+          "includedInGrammar": true
+        },
+        {
+          "command": "bpa.command.edit",
+          "syntaxRule": "editBlock",
+          "applicability": "no-step",
+          "includedInGrammar": true
+        },
+        {
+          "command": "bpa.command.terminate",
+          "syntaxRule": "termination",
+          "applicability": "limited",
+          "includedInGrammar": true
+        },
+        {
+          "command": "bpa.command.declareBO",
+          "syntaxRule": "declaration",
+          "applicability": "supported",
+          "includedInGrammar": true
+        },
+        {
+          "command": "bpa.command.declareBOWithBOGroup",
+          "syntaxRule": "declaration",
+          "applicability": "supported",
+          "includedInGrammar": true
+        },
+        {
+          "command": "bpa.command.declareBS",
+          "syntaxRule": "declaration",
+          "applicability": "supported",
+          "includedInGrammar": true
+        },
+        {
+          "command": "bpa.command.declareSS",
+          "syntaxRule": "declaration",
+          "applicability": "supported",
+          "includedInGrammar": true
+        },
+        {
+          "command": "bpa.command.declareDA",
+          "syntaxRule": "declaration",
+          "applicability": "supported",
+          "includedInGrammar": true
+        },
+        {
+          "command": "bpa.command.declareMap",
+          "syntaxRule": "declaration",
+          "applicability": "supported",
+          "includedInGrammar": true
+        },
+        {
+          "command": "bpa.command.invokeBO",
+          "syntaxRule": "invocation",
+          "applicability": "limited",
+          "includedInGrammar": true
+        },
+        {
+          "command": "bpa.command.invokeBS",
+          "syntaxRule": "invocation",
+          "applicability": "limited",
+          "includedInGrammar": true
+        },
+        {
+          "command": "bpa.command.invokeSS",
+          "syntaxRule": "invocation",
+          "applicability": "limited",
+          "includedInGrammar": true
+        },
+        {
+          "command": "bpa.command.invokeMap",
+          "syntaxRule": "mapOperation",
+          "applicability": "limited",
+          "includedInGrammar": true
+        },
+        {
+          "command": "bpa.command.generateBOEditMap",
+          "syntaxRule": "mapOperation",
+          "applicability": "limited",
+          "includedInGrammar": true
+        },
+        {
+          "command": "bpa.command.generateBSEditMap",
+          "syntaxRule": "mapOperation",
+          "applicability": "limited",
+          "includedInGrammar": true
+        },
+        {
+          "command": "bpa.command.generateSSEditMap",
+          "syntaxRule": "mapOperation",
+          "applicability": "limited",
+          "includedInGrammar": true
+        },
+        {
+          "command": "bpa.command.generateDAEditMap",
+          "syntaxRule": "mapOperation",
+          "applicability": "limited",
+          "includedInGrammar": true
+        },
+        {
+          "command": "bpa.command.invokeGroovy",
+          "syntaxRule": "groovyInvocation",
+          "applicability": "unavailable",
+          "includedInGrammar": false
+        }
+      ],
+      "restrictions": [
+        "The grammar consumes the complete Edit Data body; unconsumed trailing text is invalid.",
+        "Quoted expressions are tokens in this grammar. Their XPath syntax and meaning belong to the selected expression environment.",
+        "Grammar acceptance does not establish valid data paths, available targets, permitted operands, or successful execution.",
+        "An excluded operation may still parse or become a no-op. Exclusion describes the reference supported-operation subset, not parser or application-save rejection.",
+        "Use command applicability and constraints together with the grammar. A no-step form is retained to describe accepted syntax that emits no browser operation.",
+        "An unsafe form remains syntactically available but is limited to caution examples. In browser profiles, branch loses its condition during conversion; use if with goto.",
+        "Groovy source steps and invokeGroovy are unavailable in browser execution."
+      ]
+    },
+    {
+      "id": "bpa-legacy",
+      "engineCode": "F11C",
+      "scriptTypes": ["bpa"],
+      "execution": "browser",
+      "expressionLanguage": "Browser XPath 1.0 with legacy compatibility behavior",
+      "sourceStepsByScriptType": {
+        "bpa": [
+          {
+            "code": "DISP",
+            "name": "Display text"
+          },
+          {
+            "code": "EDDT",
+            "name": "Edit Data"
+          },
+          {
+            "code": "FCS",
+            "name": "Set focus to a field"
+          },
+          {
+            "code": "FUNC",
+            "name": "Invoke function"
+          },
+          {
+            "code": "GOTO",
+            "name": "Go to a step"
+          },
+          {
+            "code": "HGHT",
+            "name": "Height"
+          },
+          {
+            "code": "IF",
+            "name": "Conditional branch"
+          },
+          {
+            "code": "INBO",
+            "name": "Invoke business object"
+          },
+          {
+            "code": "INBS",
+            "name": "Invoke business service"
+          },
+          {
+            "code": "INMP",
+            "name": "Invoke map"
+          },
+          {
+            "code": "INP",
+            "name": "Input data"
+          },
+          {
+            "code": "INSC",
+            "name": "Invoke service script"
+          },
+          {
+            "code": "LABL",
+            "name": "Label"
+          },
+          {
+            "code": "MATH",
+            "name": "Mathematical operation"
+          },
+          {
+            "code": "MOVE",
+            "name": "Move data"
+          },
+          {
+            "code": "NAV",
+            "name": "Navigate to a page"
+          },
+          {
+            "code": "PRES",
+            "name": "Press a button"
+          },
+          {
+            "code": "PRMT",
+            "name": "Prompt user"
+          },
+          {
+            "code": "PSCR",
+            "name": "Perform script"
+          },
+          {
+            "code": "TERM",
+            "name": "Terminate"
+          },
+          {
+            "code": "XCTL",
+            "name": "Transfer control"
+          }
+        ]
+      },
+      "representations": ["legacy-structured-steps", "edit-data-body"],
+      "grammar": {
+        "kind": "edit-data",
+        "path": "grammar/bpa-legacy/BpaLegacy.g4",
+        "name": "BpaLegacy",
+        "entryPoint": "program",
+        "sharedGrammar": "grammar/EditData.g4",
+        "completeInput": true,
+        "syntaxScope": "The reference supported-operation subset of Edit Data body forms associated with the compatibility profile. This is not a grammar for native legacy records or a modern-text-to-legacy conversion contract."
+      },
+      "commandForms": [
+        {
+          "command": "bpa.command.move",
+          "syntaxRule": "assignment",
+          "applicability": "limited",
+          "includedInGrammar": true
+        },
+        {
+          "command": "bpa.command.if",
+          "syntaxRule": "conditional",
+          "applicability": "supported",
+          "includedInGrammar": true
+        },
+        {
+          "command": "bpa.command.for",
+          "syntaxRule": "iteration",
+          "applicability": "limited",
+          "includedInGrammar": true
+        },
+        {
+          "command": "bpa.command.goto",
+          "syntaxRule": "jump",
+          "applicability": "supported",
+          "includedInGrammar": true
+        },
+        {
+          "command": "bpa.command.branch",
+          "syntaxRule": "branch",
+          "applicability": "unsafe",
+          "includedInGrammar": true
+        },
+        {
+          "command": "bpa.command.performScript",
+          "syntaxRule": "call",
+          "applicability": "limited",
+          "includedInGrammar": true
+        },
+        {
+          "command": "bpa.command.transferControl",
+          "syntaxRule": "call",
+          "applicability": "limited",
+          "includedInGrammar": true
+        },
+        {
+          "command": "bpa.command.navigate",
+          "syntaxRule": "call",
+          "applicability": "limited",
+          "includedInGrammar": true
+        },
+        {
+          "command": "bpa.command.navigateAndReloadDashboard",
+          "syntaxRule": "call",
+          "applicability": "limited",
+          "includedInGrammar": true
+        },
+        {
+          "command": "bpa.command.default",
+          "syntaxRule": "defaultValue",
+          "applicability": "supported",
+          "includedInGrammar": true
+        },
+        {
+          "command": "bpa.command.label",
+          "syntaxRule": "labelStatement",
+          "applicability": "no-step",
+          "includedInGrammar": true
+        },
+        {
+          "command": "bpa.command.edit",
+          "syntaxRule": "editBlock",
+          "applicability": "no-step",
+          "includedInGrammar": true
+        },
+        {
+          "command": "bpa.command.terminate",
+          "syntaxRule": "termination",
+          "applicability": "limited",
+          "includedInGrammar": true
+        },
+        {
+          "command": "bpa.command.declareBO",
+          "syntaxRule": "declaration",
+          "applicability": "supported",
+          "includedInGrammar": true
+        },
+        {
+          "command": "bpa.command.declareBOWithBOGroup",
+          "syntaxRule": "declaration",
+          "applicability": "supported",
+          "includedInGrammar": true
+        },
+        {
+          "command": "bpa.command.declareBS",
+          "syntaxRule": "declaration",
+          "applicability": "supported",
+          "includedInGrammar": true
+        },
+        {
+          "command": "bpa.command.declareSS",
+          "syntaxRule": "declaration",
+          "applicability": "supported",
+          "includedInGrammar": true
+        },
+        {
+          "command": "bpa.command.declareDA",
+          "syntaxRule": "declaration",
+          "applicability": "supported",
+          "includedInGrammar": true
+        },
+        {
+          "command": "bpa.command.declareMap",
+          "syntaxRule": "declaration",
+          "applicability": "supported",
+          "includedInGrammar": true
+        },
+        {
+          "command": "bpa.command.invokeBO",
+          "syntaxRule": "invocation",
+          "applicability": "limited",
+          "includedInGrammar": true
+        },
+        {
+          "command": "bpa.command.invokeBS",
+          "syntaxRule": "invocation",
+          "applicability": "limited",
+          "includedInGrammar": true
+        },
+        {
+          "command": "bpa.command.invokeSS",
+          "syntaxRule": "invocation",
+          "applicability": "limited",
+          "includedInGrammar": true
+        },
+        {
+          "command": "bpa.command.invokeMap",
+          "syntaxRule": "mapOperation",
+          "applicability": "limited",
+          "includedInGrammar": true
+        },
+        {
+          "command": "bpa.command.generateBOEditMap",
+          "syntaxRule": "mapOperation",
+          "applicability": "limited",
+          "includedInGrammar": true
+        },
+        {
+          "command": "bpa.command.generateBSEditMap",
+          "syntaxRule": "mapOperation",
+          "applicability": "limited",
+          "includedInGrammar": true
+        },
+        {
+          "command": "bpa.command.generateSSEditMap",
+          "syntaxRule": "mapOperation",
+          "applicability": "limited",
+          "includedInGrammar": true
+        },
+        {
+          "command": "bpa.command.generateDAEditMap",
+          "syntaxRule": "mapOperation",
+          "applicability": "limited",
+          "includedInGrammar": true
+        },
+        {
+          "command": "bpa.command.invokeGroovy",
+          "syntaxRule": "groovyInvocation",
+          "applicability": "unavailable",
+          "includedInGrammar": false
+        }
+      ],
+      "restrictions": [
+        "The grammar consumes the complete Edit Data body; unconsumed trailing text is invalid.",
+        "Quoted expressions are tokens in this grammar. Their XPath syntax and meaning belong to the selected expression environment.",
+        "Grammar acceptance does not establish valid data paths, available targets, permitted operands, or successful execution.",
+        "An excluded operation may still parse or become a no-op. Exclusion describes the reference supported-operation subset, not parser or application-save rejection.",
+        "Use command applicability and constraints together with the grammar. A no-step form is retained to describe accepted syntax that emits no browser operation.",
+        "An unsafe form remains syntactically available but is limited to caution examples. In browser profiles, branch loses its condition during conversion; use if with goto.",
+        "Legacy stored steps have compatibility-specific operand and presentation rules. The normalized bpa-1 JSON notation does not define their native storage format.",
+        "Groovy source steps and invokeGroovy are unavailable in browser execution."
+      ]
+    },
+    {
+      "id": "server-1",
+      "engineCode": "F110",
+      "scriptTypes": ["service", "plug-in"],
+      "execution": "server",
+      "expressionLanguage": "XPath 1.0",
+      "sourceStepsByScriptType": {
+        "service": [
+          {
+            "code": "EDDT",
+            "name": "Edit Data"
+          },
+          {
+            "code": "GOTO",
+            "name": "Go to a step"
+          },
+          {
+            "code": "GVIM",
+            "name": "Groovy imports"
+          },
+          {
+            "code": "GVYM",
+            "name": "Groovy members"
+          },
+          {
+            "code": "IF",
+            "name": "Conditional branch"
+          },
+          {
+            "code": "INBO",
+            "name": "Invoke business object"
+          },
+          {
+            "code": "INBS",
+            "name": "Invoke business service"
+          },
+          {
+            "code": "INSC",
+            "name": "Invoke service script"
+          },
+          {
+            "code": "LABL",
+            "name": "Label"
+          },
+          {
+            "code": "MOVE",
+            "name": "Move data"
+          },
+          {
+            "code": "TERM",
+            "name": "Terminate"
+          }
+        ],
+        "plug-in": [
+          {
+            "code": "EDDT",
+            "name": "Edit Data"
+          },
+          {
+            "code": "GOTO",
+            "name": "Go to a step"
+          },
+          {
+            "code": "GVIM",
+            "name": "Groovy imports"
+          },
+          {
+            "code": "GVYM",
+            "name": "Groovy members"
+          },
+          {
+            "code": "IF",
+            "name": "Conditional branch"
+          },
+          {
+            "code": "INBO",
+            "name": "Invoke business object"
+          },
+          {
+            "code": "INBS",
+            "name": "Invoke business service"
+          },
+          {
+            "code": "INSC",
+            "name": "Invoke service script"
+          },
+          {
+            "code": "LABL",
+            "name": "Label"
+          },
+          {
+            "code": "MOVE",
+            "name": "Move data"
+          },
+          {
+            "code": "TERM",
+            "name": "Terminate"
+          }
+        ]
+      },
+      "representations": ["edit-data-body", "groovy-source-contributions"],
+      "grammar": {
+        "kind": "edit-data",
+        "path": "grammar/server-1/Server1.g4",
+        "name": "Server1",
+        "entryPoint": "program",
+        "sharedGrammar": "grammar/EditData.g4",
+        "completeInput": true,
+        "syntaxScope": "The reference supported-operation subset of Edit Data body syntax. Operand validity, conversion effects, and runtime requirements are additional contract rules."
+      },
+      "commandForms": [
+        {
+          "command": "bpa.command.move",
+          "syntaxRule": "assignment",
+          "applicability": "supported",
+          "includedInGrammar": true
+        },
+        {
+          "command": "bpa.command.if",
+          "syntaxRule": "conditional",
+          "applicability": "supported",
+          "includedInGrammar": true
+        },
+        {
+          "command": "bpa.command.for",
+          "syntaxRule": "iteration",
+          "applicability": "supported",
+          "includedInGrammar": true
+        },
+        {
+          "command": "bpa.command.goto",
+          "syntaxRule": "jump",
+          "applicability": "supported",
+          "includedInGrammar": true
+        },
+        {
+          "command": "bpa.command.branch",
+          "syntaxRule": "branch",
+          "applicability": "supported",
+          "includedInGrammar": true
+        },
+        {
+          "command": "bpa.command.performScript",
+          "syntaxRule": "call",
+          "applicability": "unavailable",
+          "includedInGrammar": false
+        },
+        {
+          "command": "bpa.command.transferControl",
+          "syntaxRule": "call",
+          "applicability": "unavailable",
+          "includedInGrammar": false
+        },
+        {
+          "command": "bpa.command.navigate",
+          "syntaxRule": "call",
+          "applicability": "unavailable",
+          "includedInGrammar": false
+        },
+        {
+          "command": "bpa.command.navigateAndReloadDashboard",
+          "syntaxRule": "call",
+          "applicability": "unavailable",
+          "includedInGrammar": false
+        },
+        {
+          "command": "bpa.command.default",
+          "syntaxRule": "defaultValue",
+          "applicability": "supported",
+          "includedInGrammar": true
+        },
+        {
+          "command": "bpa.command.label",
+          "syntaxRule": "labelStatement",
+          "applicability": "supported",
+          "includedInGrammar": true
+        },
+        {
+          "command": "bpa.command.edit",
+          "syntaxRule": "editBlock",
+          "applicability": "supported",
+          "includedInGrammar": true
+        },
+        {
+          "command": "bpa.command.terminate",
+          "syntaxRule": "termination",
+          "applicability": "supported",
+          "includedInGrammar": true
+        },
+        {
+          "command": "bpa.command.declareBO",
+          "syntaxRule": "declaration",
+          "applicability": "supported",
+          "includedInGrammar": true
+        },
+        {
+          "command": "bpa.command.declareBOWithBOGroup",
+          "syntaxRule": "declaration",
+          "applicability": "supported",
+          "includedInGrammar": true
+        },
+        {
+          "command": "bpa.command.declareBS",
+          "syntaxRule": "declaration",
+          "applicability": "supported",
+          "includedInGrammar": true
+        },
+        {
+          "command": "bpa.command.declareSS",
+          "syntaxRule": "declaration",
+          "applicability": "supported",
+          "includedInGrammar": true
+        },
+        {
+          "command": "bpa.command.declareDA",
+          "syntaxRule": "declaration",
+          "applicability": "supported",
+          "includedInGrammar": true
+        },
+        {
+          "command": "bpa.command.declareMap",
+          "syntaxRule": "declaration",
+          "applicability": "supported",
+          "includedInGrammar": true
+        },
+        {
+          "command": "bpa.command.invokeBO",
+          "syntaxRule": "invocation",
+          "applicability": "supported",
+          "includedInGrammar": true
+        },
+        {
+          "command": "bpa.command.invokeBS",
+          "syntaxRule": "invocation",
+          "applicability": "supported",
+          "includedInGrammar": true
+        },
+        {
+          "command": "bpa.command.invokeSS",
+          "syntaxRule": "invocation",
+          "applicability": "supported",
+          "includedInGrammar": true
+        },
+        {
+          "command": "bpa.command.invokeMap",
+          "syntaxRule": "mapOperation",
+          "applicability": "unavailable",
+          "includedInGrammar": false
+        },
+        {
+          "command": "bpa.command.generateBOEditMap",
+          "syntaxRule": "mapOperation",
+          "applicability": "unavailable",
+          "includedInGrammar": false
+        },
+        {
+          "command": "bpa.command.generateBSEditMap",
+          "syntaxRule": "mapOperation",
+          "applicability": "unavailable",
+          "includedInGrammar": false
+        },
+        {
+          "command": "bpa.command.generateSSEditMap",
+          "syntaxRule": "mapOperation",
+          "applicability": "unavailable",
+          "includedInGrammar": false
+        },
+        {
+          "command": "bpa.command.generateDAEditMap",
+          "syntaxRule": "mapOperation",
+          "applicability": "unavailable",
+          "includedInGrammar": false
+        },
+        {
+          "command": "bpa.command.invokeGroovy",
+          "syntaxRule": "groovyInvocation",
+          "applicability": "limited",
+          "includedInGrammar": true
+        }
+      ],
+      "restrictions": [
+        "The grammar consumes the complete Edit Data body; unconsumed trailing text is invalid.",
+        "Quoted expressions are tokens in this grammar. Their XPath syntax and meaning belong to the selected expression environment.",
+        "Grammar acceptance does not establish valid data paths, available targets, permitted operands, or successful execution.",
+        "An excluded operation may still parse or become a no-op. Exclusion describes the reference supported-operation subset, not parser or application-save rejection.",
+        "Use command applicability and constraints together with the grammar. A no-step form is retained to describe accepted syntax that emits no browser operation.",
+        "An unsafe form remains syntactically available but is limited to caution examples. In browser profiles, branch loses its condition during conversion; use if with goto.",
+        "Groovy members are a separate source contribution and can be called with invokeGroovy when the host enables them.",
+        "Browser interaction commands are unavailable in server execution."
+      ]
+    },
+    {
+      "id": "server-2",
+      "engineCode": "F120",
+      "scriptTypes": ["service", "plug-in"],
+      "execution": "server",
+      "expressionLanguage": "XPath 2.0",
+      "sourceStepsByScriptType": {
+        "service": [
+          {
+            "code": "EDDT",
+            "name": "Edit Data"
+          },
+          {
+            "code": "GOTO",
+            "name": "Go to a step"
+          },
+          {
+            "code": "GVIM",
+            "name": "Groovy imports"
+          },
+          {
+            "code": "GVYM",
+            "name": "Groovy members"
+          },
+          {
+            "code": "IF",
+            "name": "Conditional branch"
+          },
+          {
+            "code": "INBO",
+            "name": "Invoke business object"
+          },
+          {
+            "code": "INBS",
+            "name": "Invoke business service"
+          },
+          {
+            "code": "INSC",
+            "name": "Invoke service script"
+          },
+          {
+            "code": "LABL",
+            "name": "Label"
+          },
+          {
+            "code": "MOVE",
+            "name": "Move data"
+          },
+          {
+            "code": "TERM",
+            "name": "Terminate"
+          }
+        ],
+        "plug-in": [
+          {
+            "code": "EDDT",
+            "name": "Edit Data"
+          },
+          {
+            "code": "GOTO",
+            "name": "Go to a step"
+          },
+          {
+            "code": "GVIM",
+            "name": "Groovy imports"
+          },
+          {
+            "code": "GVYM",
+            "name": "Groovy members"
+          },
+          {
+            "code": "IF",
+            "name": "Conditional branch"
+          },
+          {
+            "code": "INBO",
+            "name": "Invoke business object"
+          },
+          {
+            "code": "INBS",
+            "name": "Invoke business service"
+          },
+          {
+            "code": "INSC",
+            "name": "Invoke service script"
+          },
+          {
+            "code": "LABL",
+            "name": "Label"
+          },
+          {
+            "code": "MOVE",
+            "name": "Move data"
+          },
+          {
+            "code": "TERM",
+            "name": "Terminate"
+          }
+        ]
+      },
+      "representations": ["edit-data-body", "groovy-source-contributions"],
+      "grammar": {
+        "kind": "edit-data",
+        "path": "grammar/server-2/Server2.g4",
+        "name": "Server2",
+        "entryPoint": "program",
+        "sharedGrammar": "grammar/EditData.g4",
+        "completeInput": true,
+        "syntaxScope": "The reference supported-operation subset of Edit Data body syntax. Operand validity, conversion effects, and runtime requirements are additional contract rules."
+      },
+      "commandForms": [
+        {
+          "command": "bpa.command.move",
+          "syntaxRule": "assignment",
+          "applicability": "supported",
+          "includedInGrammar": true
+        },
+        {
+          "command": "bpa.command.if",
+          "syntaxRule": "conditional",
+          "applicability": "supported",
+          "includedInGrammar": true
+        },
+        {
+          "command": "bpa.command.for",
+          "syntaxRule": "iteration",
+          "applicability": "supported",
+          "includedInGrammar": true
+        },
+        {
+          "command": "bpa.command.goto",
+          "syntaxRule": "jump",
+          "applicability": "supported",
+          "includedInGrammar": true
+        },
+        {
+          "command": "bpa.command.branch",
+          "syntaxRule": "branch",
+          "applicability": "supported",
+          "includedInGrammar": true
+        },
+        {
+          "command": "bpa.command.performScript",
+          "syntaxRule": "call",
+          "applicability": "unavailable",
+          "includedInGrammar": false
+        },
+        {
+          "command": "bpa.command.transferControl",
+          "syntaxRule": "call",
+          "applicability": "unavailable",
+          "includedInGrammar": false
+        },
+        {
+          "command": "bpa.command.navigate",
+          "syntaxRule": "call",
+          "applicability": "unavailable",
+          "includedInGrammar": false
+        },
+        {
+          "command": "bpa.command.navigateAndReloadDashboard",
+          "syntaxRule": "call",
+          "applicability": "unavailable",
+          "includedInGrammar": false
+        },
+        {
+          "command": "bpa.command.default",
+          "syntaxRule": "defaultValue",
+          "applicability": "supported",
+          "includedInGrammar": true
+        },
+        {
+          "command": "bpa.command.label",
+          "syntaxRule": "labelStatement",
+          "applicability": "supported",
+          "includedInGrammar": true
+        },
+        {
+          "command": "bpa.command.edit",
+          "syntaxRule": "editBlock",
+          "applicability": "supported",
+          "includedInGrammar": true
+        },
+        {
+          "command": "bpa.command.terminate",
+          "syntaxRule": "termination",
+          "applicability": "supported",
+          "includedInGrammar": true
+        },
+        {
+          "command": "bpa.command.declareBO",
+          "syntaxRule": "declaration",
+          "applicability": "supported",
+          "includedInGrammar": true
+        },
+        {
+          "command": "bpa.command.declareBOWithBOGroup",
+          "syntaxRule": "declaration",
+          "applicability": "supported",
+          "includedInGrammar": true
+        },
+        {
+          "command": "bpa.command.declareBS",
+          "syntaxRule": "declaration",
+          "applicability": "supported",
+          "includedInGrammar": true
+        },
+        {
+          "command": "bpa.command.declareSS",
+          "syntaxRule": "declaration",
+          "applicability": "supported",
+          "includedInGrammar": true
+        },
+        {
+          "command": "bpa.command.declareDA",
+          "syntaxRule": "declaration",
+          "applicability": "supported",
+          "includedInGrammar": true
+        },
+        {
+          "command": "bpa.command.declareMap",
+          "syntaxRule": "declaration",
+          "applicability": "supported",
+          "includedInGrammar": true
+        },
+        {
+          "command": "bpa.command.invokeBO",
+          "syntaxRule": "invocation",
+          "applicability": "supported",
+          "includedInGrammar": true
+        },
+        {
+          "command": "bpa.command.invokeBS",
+          "syntaxRule": "invocation",
+          "applicability": "supported",
+          "includedInGrammar": true
+        },
+        {
+          "command": "bpa.command.invokeSS",
+          "syntaxRule": "invocation",
+          "applicability": "supported",
+          "includedInGrammar": true
+        },
+        {
+          "command": "bpa.command.invokeMap",
+          "syntaxRule": "mapOperation",
+          "applicability": "unavailable",
+          "includedInGrammar": false
+        },
+        {
+          "command": "bpa.command.generateBOEditMap",
+          "syntaxRule": "mapOperation",
+          "applicability": "unavailable",
+          "includedInGrammar": false
+        },
+        {
+          "command": "bpa.command.generateBSEditMap",
+          "syntaxRule": "mapOperation",
+          "applicability": "unavailable",
+          "includedInGrammar": false
+        },
+        {
+          "command": "bpa.command.generateSSEditMap",
+          "syntaxRule": "mapOperation",
+          "applicability": "unavailable",
+          "includedInGrammar": false
+        },
+        {
+          "command": "bpa.command.generateDAEditMap",
+          "syntaxRule": "mapOperation",
+          "applicability": "unavailable",
+          "includedInGrammar": false
+        },
+        {
+          "command": "bpa.command.invokeGroovy",
+          "syntaxRule": "groovyInvocation",
+          "applicability": "limited",
+          "includedInGrammar": true
+        }
+      ],
+      "restrictions": [
+        "The grammar consumes the complete Edit Data body; unconsumed trailing text is invalid.",
+        "Quoted expressions are tokens in this grammar. Their XPath syntax and meaning belong to the selected expression environment.",
+        "Grammar acceptance does not establish valid data paths, available targets, permitted operands, or successful execution.",
+        "An excluded operation may still parse or become a no-op. Exclusion describes the reference supported-operation subset, not parser or application-save rejection.",
+        "Use command applicability and constraints together with the grammar. A no-step form is retained to describe accepted syntax that emits no browser operation.",
+        "An unsafe form remains syntactically available but is limited to caution examples. In browser profiles, branch loses its condition during conversion; use if with goto.",
+        "Groovy members are a separate source contribution and can be called with invokeGroovy when the host enables them.",
+        "Browser interaction commands are unavailable in server execution."
+      ]
+    },
+    {
+      "id": "server-3",
+      "engineCode": "F130",
+      "scriptTypes": ["service", "plug-in"],
+      "execution": "server",
+      "expressionLanguage": "XPath 2.0 with optimized evaluation",
+      "sourceStepsByScriptType": {
+        "service": [
+          {
+            "code": "EDDT",
+            "name": "Edit Data"
+          },
+          {
+            "code": "GOTO",
+            "name": "Go to a step"
+          },
+          {
+            "code": "GVIM",
+            "name": "Groovy imports"
+          },
+          {
+            "code": "GVYM",
+            "name": "Groovy members"
+          },
+          {
+            "code": "IF",
+            "name": "Conditional branch"
+          },
+          {
+            "code": "INBO",
+            "name": "Invoke business object"
+          },
+          {
+            "code": "INBS",
+            "name": "Invoke business service"
+          },
+          {
+            "code": "INSC",
+            "name": "Invoke service script"
+          },
+          {
+            "code": "LABL",
+            "name": "Label"
+          },
+          {
+            "code": "MOVE",
+            "name": "Move data"
+          },
+          {
+            "code": "TERM",
+            "name": "Terminate"
+          }
+        ],
+        "plug-in": [
+          {
+            "code": "EDDT",
+            "name": "Edit Data"
+          },
+          {
+            "code": "GOTO",
+            "name": "Go to a step"
+          },
+          {
+            "code": "GVIM",
+            "name": "Groovy imports"
+          },
+          {
+            "code": "GVYM",
+            "name": "Groovy members"
+          },
+          {
+            "code": "IF",
+            "name": "Conditional branch"
+          },
+          {
+            "code": "INBO",
+            "name": "Invoke business object"
+          },
+          {
+            "code": "INBS",
+            "name": "Invoke business service"
+          },
+          {
+            "code": "INSC",
+            "name": "Invoke service script"
+          },
+          {
+            "code": "LABL",
+            "name": "Label"
+          },
+          {
+            "code": "MOVE",
+            "name": "Move data"
+          },
+          {
+            "code": "TERM",
+            "name": "Terminate"
+          }
+        ]
+      },
+      "representations": ["edit-data-body", "groovy-source-contributions"],
+      "grammar": {
+        "kind": "edit-data",
+        "path": "grammar/server-3/Server3.g4",
+        "name": "Server3",
+        "entryPoint": "program",
+        "sharedGrammar": "grammar/EditData.g4",
+        "completeInput": true,
+        "syntaxScope": "The reference supported-operation subset of Edit Data body syntax. Operand validity, conversion effects, and runtime requirements are additional contract rules."
+      },
+      "commandForms": [
+        {
+          "command": "bpa.command.move",
+          "syntaxRule": "assignment",
+          "applicability": "supported",
+          "includedInGrammar": true
+        },
+        {
+          "command": "bpa.command.if",
+          "syntaxRule": "conditional",
+          "applicability": "supported",
+          "includedInGrammar": true
+        },
+        {
+          "command": "bpa.command.for",
+          "syntaxRule": "iteration",
+          "applicability": "supported",
+          "includedInGrammar": true
+        },
+        {
+          "command": "bpa.command.goto",
+          "syntaxRule": "jump",
+          "applicability": "supported",
+          "includedInGrammar": true
+        },
+        {
+          "command": "bpa.command.branch",
+          "syntaxRule": "branch",
+          "applicability": "supported",
+          "includedInGrammar": true
+        },
+        {
+          "command": "bpa.command.performScript",
+          "syntaxRule": "call",
+          "applicability": "unavailable",
+          "includedInGrammar": false
+        },
+        {
+          "command": "bpa.command.transferControl",
+          "syntaxRule": "call",
+          "applicability": "unavailable",
+          "includedInGrammar": false
+        },
+        {
+          "command": "bpa.command.navigate",
+          "syntaxRule": "call",
+          "applicability": "unavailable",
+          "includedInGrammar": false
+        },
+        {
+          "command": "bpa.command.navigateAndReloadDashboard",
+          "syntaxRule": "call",
+          "applicability": "unavailable",
+          "includedInGrammar": false
+        },
+        {
+          "command": "bpa.command.default",
+          "syntaxRule": "defaultValue",
+          "applicability": "supported",
+          "includedInGrammar": true
+        },
+        {
+          "command": "bpa.command.label",
+          "syntaxRule": "labelStatement",
+          "applicability": "supported",
+          "includedInGrammar": true
+        },
+        {
+          "command": "bpa.command.edit",
+          "syntaxRule": "editBlock",
+          "applicability": "supported",
+          "includedInGrammar": true
+        },
+        {
+          "command": "bpa.command.terminate",
+          "syntaxRule": "termination",
+          "applicability": "supported",
+          "includedInGrammar": true
+        },
+        {
+          "command": "bpa.command.declareBO",
+          "syntaxRule": "declaration",
+          "applicability": "supported",
+          "includedInGrammar": true
+        },
+        {
+          "command": "bpa.command.declareBOWithBOGroup",
+          "syntaxRule": "declaration",
+          "applicability": "supported",
+          "includedInGrammar": true
+        },
+        {
+          "command": "bpa.command.declareBS",
+          "syntaxRule": "declaration",
+          "applicability": "supported",
+          "includedInGrammar": true
+        },
+        {
+          "command": "bpa.command.declareSS",
+          "syntaxRule": "declaration",
+          "applicability": "supported",
+          "includedInGrammar": true
+        },
+        {
+          "command": "bpa.command.declareDA",
+          "syntaxRule": "declaration",
+          "applicability": "supported",
+          "includedInGrammar": true
+        },
+        {
+          "command": "bpa.command.declareMap",
+          "syntaxRule": "declaration",
+          "applicability": "supported",
+          "includedInGrammar": true
+        },
+        {
+          "command": "bpa.command.invokeBO",
+          "syntaxRule": "invocation",
+          "applicability": "supported",
+          "includedInGrammar": true
+        },
+        {
+          "command": "bpa.command.invokeBS",
+          "syntaxRule": "invocation",
+          "applicability": "supported",
+          "includedInGrammar": true
+        },
+        {
+          "command": "bpa.command.invokeSS",
+          "syntaxRule": "invocation",
+          "applicability": "supported",
+          "includedInGrammar": true
+        },
+        {
+          "command": "bpa.command.invokeMap",
+          "syntaxRule": "mapOperation",
+          "applicability": "unavailable",
+          "includedInGrammar": false
+        },
+        {
+          "command": "bpa.command.generateBOEditMap",
+          "syntaxRule": "mapOperation",
+          "applicability": "unavailable",
+          "includedInGrammar": false
+        },
+        {
+          "command": "bpa.command.generateBSEditMap",
+          "syntaxRule": "mapOperation",
+          "applicability": "unavailable",
+          "includedInGrammar": false
+        },
+        {
+          "command": "bpa.command.generateSSEditMap",
+          "syntaxRule": "mapOperation",
+          "applicability": "unavailable",
+          "includedInGrammar": false
+        },
+        {
+          "command": "bpa.command.generateDAEditMap",
+          "syntaxRule": "mapOperation",
+          "applicability": "unavailable",
+          "includedInGrammar": false
+        },
+        {
+          "command": "bpa.command.invokeGroovy",
+          "syntaxRule": "groovyInvocation",
+          "applicability": "limited",
+          "includedInGrammar": true
+        }
+      ],
+      "restrictions": [
+        "The grammar consumes the complete Edit Data body; unconsumed trailing text is invalid.",
+        "Quoted expressions are tokens in this grammar. Their XPath syntax and meaning belong to the selected expression environment.",
+        "Grammar acceptance does not establish valid data paths, available targets, permitted operands, or successful execution.",
+        "An excluded operation may still parse or become a no-op. Exclusion describes the reference supported-operation subset, not parser or application-save rejection.",
+        "Use command applicability and constraints together with the grammar. A no-step form is retained to describe accepted syntax that emits no browser operation.",
+        "An unsafe form remains syntactically available but is limited to caution examples. In browser profiles, branch loses its condition during conversion; use if with goto.",
+        "Groovy members are a separate source contribution and can be called with invokeGroovy when the host enables them.",
+        "Browser interaction commands are unavailable in server execution."
+      ]
+    },
+    {
+      "id": "groovy",
+      "engineCode": "F1GV",
+      "scriptTypes": ["plug-in", "groovy-library"],
+      "execution": "server",
+      "expressionLanguage": "Groovy",
+      "sourceStepsByScriptType": {
+        "plug-in": [
+          {
+            "code": "GVIM",
+            "name": "Groovy imports"
+          },
+          {
+            "code": "GVYM",
+            "name": "Groovy members"
+          }
+        ],
+        "groovy-library": [
+          {
+            "code": "GLIF",
+            "name": "Groovy library interface"
+          },
+          {
+            "code": "GVIM",
+            "name": "Groovy imports"
+          },
+          {
+            "code": "GVYM",
+            "name": "Groovy members"
+          }
+        ]
+      },
+      "representations": ["groovy-source-contributions"],
+      "grammar": {
+        "kind": "external-groovy",
+        "languageReference": "https://groovy-lang.org/documentation.html",
+        "integrationReference": "specification/groovy-integration.md",
+        "syntaxScope": "Groovy source contributions use the host-compatible Groovy language. Source-step containers and permitted host APIs are separate integration rules."
+      },
+      "commandForms": [
+        {
+          "command": "bpa.command.move",
+          "syntaxRule": "assignment",
+          "applicability": "unavailable",
+          "includedInGrammar": false
+        },
+        {
+          "command": "bpa.command.if",
+          "syntaxRule": "conditional",
+          "applicability": "unavailable",
+          "includedInGrammar": false
+        },
+        {
+          "command": "bpa.command.for",
+          "syntaxRule": "iteration",
+          "applicability": "unavailable",
+          "includedInGrammar": false
+        },
+        {
+          "command": "bpa.command.goto",
+          "syntaxRule": "jump",
+          "applicability": "unavailable",
+          "includedInGrammar": false
+        },
+        {
+          "command": "bpa.command.branch",
+          "syntaxRule": "branch",
+          "applicability": "unavailable",
+          "includedInGrammar": false
+        },
+        {
+          "command": "bpa.command.performScript",
+          "syntaxRule": "call",
+          "applicability": "unavailable",
+          "includedInGrammar": false
+        },
+        {
+          "command": "bpa.command.transferControl",
+          "syntaxRule": "call",
+          "applicability": "unavailable",
+          "includedInGrammar": false
+        },
+        {
+          "command": "bpa.command.navigate",
+          "syntaxRule": "call",
+          "applicability": "unavailable",
+          "includedInGrammar": false
+        },
+        {
+          "command": "bpa.command.navigateAndReloadDashboard",
+          "syntaxRule": "call",
+          "applicability": "unavailable",
+          "includedInGrammar": false
+        },
+        {
+          "command": "bpa.command.default",
+          "syntaxRule": "defaultValue",
+          "applicability": "unavailable",
+          "includedInGrammar": false
+        },
+        {
+          "command": "bpa.command.label",
+          "syntaxRule": "labelStatement",
+          "applicability": "unavailable",
+          "includedInGrammar": false
+        },
+        {
+          "command": "bpa.command.edit",
+          "syntaxRule": "editBlock",
+          "applicability": "unavailable",
+          "includedInGrammar": false
+        },
+        {
+          "command": "bpa.command.terminate",
+          "syntaxRule": "termination",
+          "applicability": "unavailable",
+          "includedInGrammar": false
+        },
+        {
+          "command": "bpa.command.declareBO",
+          "syntaxRule": "declaration",
+          "applicability": "unavailable",
+          "includedInGrammar": false
+        },
+        {
+          "command": "bpa.command.declareBOWithBOGroup",
+          "syntaxRule": "declaration",
+          "applicability": "unavailable",
+          "includedInGrammar": false
+        },
+        {
+          "command": "bpa.command.declareBS",
+          "syntaxRule": "declaration",
+          "applicability": "unavailable",
+          "includedInGrammar": false
+        },
+        {
+          "command": "bpa.command.declareSS",
+          "syntaxRule": "declaration",
+          "applicability": "unavailable",
+          "includedInGrammar": false
+        },
+        {
+          "command": "bpa.command.declareDA",
+          "syntaxRule": "declaration",
+          "applicability": "unavailable",
+          "includedInGrammar": false
+        },
+        {
+          "command": "bpa.command.declareMap",
+          "syntaxRule": "declaration",
+          "applicability": "unavailable",
+          "includedInGrammar": false
+        },
+        {
+          "command": "bpa.command.invokeBO",
+          "syntaxRule": "invocation",
+          "applicability": "unavailable",
+          "includedInGrammar": false
+        },
+        {
+          "command": "bpa.command.invokeBS",
+          "syntaxRule": "invocation",
+          "applicability": "unavailable",
+          "includedInGrammar": false
+        },
+        {
+          "command": "bpa.command.invokeSS",
+          "syntaxRule": "invocation",
+          "applicability": "unavailable",
+          "includedInGrammar": false
+        },
+        {
+          "command": "bpa.command.invokeMap",
+          "syntaxRule": "mapOperation",
+          "applicability": "unavailable",
+          "includedInGrammar": false
+        },
+        {
+          "command": "bpa.command.generateBOEditMap",
+          "syntaxRule": "mapOperation",
+          "applicability": "unavailable",
+          "includedInGrammar": false
+        },
+        {
+          "command": "bpa.command.generateBSEditMap",
+          "syntaxRule": "mapOperation",
+          "applicability": "unavailable",
+          "includedInGrammar": false
+        },
+        {
+          "command": "bpa.command.generateSSEditMap",
+          "syntaxRule": "mapOperation",
+          "applicability": "unavailable",
+          "includedInGrammar": false
+        },
+        {
+          "command": "bpa.command.generateDAEditMap",
+          "syntaxRule": "mapOperation",
+          "applicability": "unavailable",
+          "includedInGrammar": false
+        },
+        {
+          "command": "bpa.command.invokeGroovy",
+          "syntaxRule": "groovyInvocation",
+          "applicability": "unavailable",
+          "includedInGrammar": false
+        }
+      ],
+      "restrictions": [
+        "Edit Data commands are unavailable in this profile.",
+        "Groovy source must satisfy the host compiler, permitted API rules, and configured extension interface.",
+        "This profile groups Groovy integration. Library engine validation can also accept numbered settings; the grouping and source-step selector do not establish successful save, compilation, or execution."
+      ]
+    }
+  ]
+}

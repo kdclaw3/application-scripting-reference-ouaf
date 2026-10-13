@@ -1,0 +1,2 @@
+start: label 'Preparation';
+move 'ready' to $state;

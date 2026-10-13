@@ -1,0 +1,20 @@
+{
+  "profile": "bpa-1",
+  "steps": [
+    {
+      "sequence": 10,
+      "kind": "invoke-business-service",
+      "fields": {
+        "target": "example",
+        "dataArea": "example",
+        "successTarget": 20,
+        "errorTarget": 20
+      }
+    },
+    {
+      "sequence": 20,
+      "kind": "terminate",
+      "fields": {}
+    }
+  ]
+}

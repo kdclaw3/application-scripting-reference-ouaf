@@ -1,0 +1,4 @@
+goto finished;
+move 'skipped' to $result;
+finished: label 'Resume here';
+move 'ready' to $result;

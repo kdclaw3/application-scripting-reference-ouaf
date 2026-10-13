@@ -1,0 +1,23 @@
+{
+  "profile": "bpa-1",
+  "steps": [
+    {
+      "sequence": 10,
+      "kind": "prompt",
+      "fields": {
+        "choices": [
+          {
+            "text": "Continue",
+            "target": 20,
+            "default": true
+          }
+        ]
+      }
+    },
+    {
+      "sequence": 20,
+      "kind": "terminate",
+      "fields": {}
+    }
+  ]
+}

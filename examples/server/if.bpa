@@ -1,0 +1,6 @@
+move 'ready' to $state;
+if ("$state = 'ready'")
+  move 'yes' to $selected;
+else
+  move 'no' to $selected;
+end-if;

@@ -1,0 +1,10 @@
+declareDA 'ExampleSchema' as 'request';
+default $status as 'new';
+if ("$status='new'")
+ move 'ready' to $status;
+else
+ move 'existing' to $status;
+end-if;
+invokeBS 'ExampleService' using "request";
+performScript 'ExampleTask';
+finish: terminate;

@@ -1,0 +1,2 @@
+move 'ready' to $status;
+move "$status" to $message;

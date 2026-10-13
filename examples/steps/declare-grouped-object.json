@@ -1,0 +1,18 @@
+{
+  "profile": "bpa-1",
+  "steps": [
+    {
+      "sequence": 10,
+      "kind": "declare-grouped-object",
+      "fields": {
+        "target": "example",
+        "alias": "example"
+      }
+    },
+    {
+      "sequence": 20,
+      "kind": "terminate",
+      "fields": {}
+    }
+  ]
+}

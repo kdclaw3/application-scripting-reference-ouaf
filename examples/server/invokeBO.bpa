@@ -1,0 +1,4 @@
+// ExampleRecord is a synthetic schema and operation contract supplied by the host.
+declareBO 'ExampleRecord' as 'record';
+move 'EXAMPLE-1' to "record/id";
+invokeBO 'ExampleRecord' using "record" for read;
